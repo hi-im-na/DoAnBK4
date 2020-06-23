@@ -1,5 +1,8 @@
 package com.bkdn.studentmanagement.controllers;
 
+import java.lang.ProcessBuilder.Redirect;
+
+import com.bkdn.studentmanagement.configs.models.structures.AccountInfo;
 import com.bkdn.studentmanagement.entities.AccountEntity;
 import com.bkdn.studentmanagement.entities.AccountRoleEntity;
 import com.bkdn.studentmanagement.entities.RoleEntity;
@@ -17,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class HomeController {
@@ -39,8 +43,6 @@ public class HomeController {
     @Autowired
     AccountRoleRepository accountRoleRepository;
 
-
-
     @GetMapping("/403")
     public String error() {
         return "error/403";
@@ -50,21 +52,38 @@ public class HomeController {
     public String register() {
         return "layouts/admin/pages/register";
     }
-    
+
+
     @PostMapping(value = "/register")
-    public String tt(@RequestParam("email") String email, @RequestParam("password") String pass,
-            @RequestParam("fullname") String fullName, @RequestParam("role") String role) {
-        // Kiem tra trung 
+    public String tt(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
+            @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
+
+        // System.out.println("**********" + email + " " + pass + "**********");
+        // Kiem tra trung
+        
         AccountEntity accountEntityCheck = accountRepository.findOneByEmail(email);
-        if(accountEntityCheck != null) {
+        if (accountEntityCheck != null) {
             return "redirect:/register?error=true";
-        }   
-        //-----------
-        accountRepository.save(new AccountEntity(email,EncrytedPasswordUtils.encrytedPassword(pass), fullName));;
+        }
+        return "redirect:/confirm";
+    }
+
+    @GetMapping("/confirm")
+    public String confirm(@RequestParam("regEmail") String email,
+    @RequestParam("regName") String fullName, @RequestParam("regRole") String role, Model m) {
+        m.addAttribute("obj_email", email);
+        m.addAttribute("obj_name", fullName);
+        m.addAttribute("obj_role", role);
+        return "layouts/admin/pages/confirm";
+    }
+
+    @PostMapping("/confirm")
+    public String confirmPost(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
+            @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
+        accountRepository.save(new AccountEntity(email, EncrytedPasswordUtils.encrytedPassword(pass), fullName));
         RoleEntity roleEntity = roleRepository.findOneByName(role);
         AccountEntity accountEntity = accountRepository.findOneByEmail(email);
         accountRoleRepository.save(new AccountRoleEntity(accountEntity.getId(), roleEntity.getId()));
         return "redirect:/accounts";
     }
-
 }
