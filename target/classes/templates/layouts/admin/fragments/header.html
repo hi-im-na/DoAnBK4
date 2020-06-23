@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+
+<head>
+    <link rel="stylesheet" href="../../../../static/css/bootstrap.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar navbar-dark bg-dark">
+            <label class="navbar-brand mb-0 h1 px-3">Calendar</label>
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <form action="#" th:action="@{/sign-out}" method="POST">
+                        <button class="btn btn-warning" type="submit">Sign out</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</body>
+
+</html>

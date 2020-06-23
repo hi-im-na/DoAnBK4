@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="../../../static/css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <label class="navbar-brand mb-0 h1">Calendar</label>
+    </nav>
+    <div class="container" style="margin-top: 100px;">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col card">
+                <!-- xu ly email trung kieu gi -->
+                <form method="POST" th:action="@{/j_spring_security_check}">
+                    <div class="form-group text-center h3" style="padding-top: 0.5rem"> Login </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    </div>
+                    <div th:if="${(param.error != null) and (param.error[0] == 'true')}"
+                        class="form-group alert-warning">Wrong email or password</div>
+                    <!-- <div th:if="@{param.logout}" class="form-group alert-success">You have been logged out</div>-->
+                    <div class="form-group" style="text-align:center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
