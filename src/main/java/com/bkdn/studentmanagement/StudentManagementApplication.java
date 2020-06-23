@@ -11,5 +11,6 @@ public class StudentManagementApplication {
 	}
 	/// ahjhj 
 	int i;
+	int z;
 
 }
