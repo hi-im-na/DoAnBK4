@@ -27,8 +27,7 @@ public class HomeController {
         } else {
             return "redirect:/sign-in";
         }
-    }
-
+    } 
     @Autowired
     AccountRepository accountRepository;
 
