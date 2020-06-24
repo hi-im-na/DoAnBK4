@@ -19,15 +19,23 @@
 <body>
     <div layout:fragment="content">
         <div class="container-fluid">
+            <br>
             <div class="row">
                 <div class="col h2">Accounts</div>
                 <div class="col" style="text-align:right">
-                    <!-- <button type="button" class="btn btn-success" data-toggle="modal" target="">Add</button> -->
+
+                    <form th:action="@{/register}">
+                        <button type="submit" class="btn btn-primary">Add new account</button>
+                    </form>
+
+
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Create new account
-                    </button>
+                    </button> -->
                 </div>
+
+
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -51,6 +59,9 @@
                 </div>
             </div>
         </div>
+
+
+
         <table class="table">
             <thead>
                 <tr>
@@ -69,7 +80,7 @@
                 </tr>
             </tbody>
         </table>
-        <a th:href="@{/register}">aaaa</a>
+
     </div>
 </body>
 
