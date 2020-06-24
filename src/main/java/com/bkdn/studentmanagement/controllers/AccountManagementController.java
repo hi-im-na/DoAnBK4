@@ -31,7 +31,7 @@ public class AccountManagementController {
     @Autowired
     AccountRoleRepository accountRoleRepository;
 
-    // @PreAuthorize("hasAuthority('Administrator')")
+    @PreAuthorize("hasAuthority('Administrator')")
     @GetMapping("/accounts")
     public String accounts(Model m) {
         List<AccountRoleEntity> accountRoleEntities = (List<AccountRoleEntity>) accountRoleRepository.findAll();
