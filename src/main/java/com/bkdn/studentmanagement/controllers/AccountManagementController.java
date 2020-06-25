@@ -31,9 +31,14 @@ public class AccountManagementController {
     @Autowired
     AccountRoleRepository accountRoleRepository;
 
+    @Autowired
+    private AccountService accountService;
+
     @PreAuthorize("hasAuthority('Administrator')")
     @GetMapping("/accounts")
     public String accounts(Model m) {
+
+        
         List<AccountRoleEntity> accountRoleEntities = (List<AccountRoleEntity>) accountRoleRepository.findAll();
         List<RoleEntity> roleEntities = (List<RoleEntity>) roleRepository.findAll();
         List<AccountEntity> accountEntities = (List<AccountEntity>) accountRepository.findAll();
