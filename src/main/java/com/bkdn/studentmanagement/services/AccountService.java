@@ -5,6 +5,7 @@ import com.bkdn.studentmanagement.models.AccountModel;
 public interface AccountService {
     
     public void addNewAccount(AccountModel model);
+    public AccountModel findOneByEmail(String email);
     
 
 }

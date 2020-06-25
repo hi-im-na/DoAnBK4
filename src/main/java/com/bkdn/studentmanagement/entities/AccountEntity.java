@@ -66,5 +66,4 @@ public class AccountEntity {
         this.encrytedPassword = encryted_password;
         this.fullName = fullName;
     }
-
 }

@@ -9,7 +9,13 @@ import com.bkdn.studentmanagement.entities.RoleEntity;
 import com.bkdn.studentmanagement.repositories.AccountRepository;
 import com.bkdn.studentmanagement.repositories.AccountRoleRepository;
 import com.bkdn.studentmanagement.repositories.RoleRepository;
+import com.bkdn.studentmanagement.services.AccountRoleService;
+import com.bkdn.studentmanagement.services.AccountService;
+import com.bkdn.studentmanagement.services.RoleService;
 import com.bkdn.studentmanagement.utils.EncrytedPasswordUtils;
+import com.bkdn.studentmanagement.models.AccountModel;
+import com.bkdn.studentmanagement.models.AccountRoleModel;
+import com.bkdn.studentmanagement.models.RoleModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,13 +41,13 @@ public class HomeController {
     }
 
     @Autowired
-    AccountRepository accountRepository;
+    AccountService accountService;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleService roleService;
 
     @Autowired
-    AccountRoleRepository accountRoleRepository;
+    AccountRoleService accountRoleService;
 
     @GetMapping("/403")
     public String error() {
@@ -61,8 +67,8 @@ public class HomeController {
         // System.out.println("**********" + email + " " + pass + "**********");
         // Kiem tra trung
         
-        AccountEntity accountEntityCheck = accountRepository.findOneByEmail(email);
-        if (accountEntityCheck != null) {
+        AccountModel accountModelCheck = this.accountService.findOneByEmail(email);
+        if (accountModelCheck != null) {
             return "redirect:/register?error=true";
         }
         return "redirect:/confirm";
@@ -80,10 +86,12 @@ public class HomeController {
     @PostMapping("/confirm")
     public String confirmPost(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
             @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
-        accountRepository.save(new AccountEntity(email, EncrytedPasswordUtils.encrytedPassword(pass), fullName));
-        RoleEntity roleEntity = roleRepository.findOneByName(role);
-        AccountEntity accountEntity = accountRepository.findOneByEmail(email);
-        accountRoleRepository.save(new AccountRoleEntity(accountEntity.getId(), roleEntity.getId()));
+        
+        accountService.addNewAccount(new AccountModel(email,EncrytedPasswordUtils.encrytedPassword(pass),fullName));
+        AccountModel accountModel = accountService.findOneByEmail(email);
+        RoleModel roleModel = roleService.findOneByName(role);
+        
+        accountRoleService.addNewAccountRole(new AccountRoleModel(accountModel.getId(), roleModel.getId()));
         return "redirect:/accounts";
     }
 }

@@ -15,14 +15,23 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public void addNewAccount(AccountModel model) {
+    public void addNewAccount(AccountModel accountModel) {
         AccountEntity accountEntity = new AccountEntity();
 
-        BeanUtils.copyProperties(model, accountEntity);
+        BeanUtils.copyProperties(accountModel, accountEntity);
 
         this.accountRepository.save(accountEntity);
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public AccountModel findOneByEmail(String email) {
+        AccountEntity accountEntity = this.accountRepository.findOneByEmail(email);
+        AccountModel accountModel = new AccountModel();
+        BeanUtils.copyProperties(accountEntity, accountModel);
+        return accountModel;
+        // TODO Auto-generated method stub
     }
     
 }

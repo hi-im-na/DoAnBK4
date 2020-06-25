@@ -1,5 +1,8 @@
 package com.bkdn.studentmanagement.models;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class AccountModel {
     private Integer id;
     private String email;
@@ -38,4 +41,9 @@ public class AccountModel {
         this.fullName = fullName;
     }
 
+    public AccountModel(String email, String encryted_password, String fullName){
+        this.email = email;
+        this.encrytedPassword = encryted_password;
+        this.fullName = fullName;
+    }
 }
