@@ -15,5 +15,11 @@ public class AccountInfo {
     private String roleCode;
     private String roleName;
 
+    public AccountInfo(String email, String fullName, String roleName){
+        this.email = email;
+        this.fullName = fullName;
+        this.roleName = roleName;
+    }
+
 
 }

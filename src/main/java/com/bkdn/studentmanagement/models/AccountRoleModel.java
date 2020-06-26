@@ -1,5 +1,8 @@
 package com.bkdn.studentmanagement.models;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class AccountRoleModel {
     private Integer id;
     private Integer accountId;

@@ -4,58 +4,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bkdn.studentmanagement.configs.models.structures.AccountInfo;
-import com.bkdn.studentmanagement.configs.services.AccountService;
-import com.bkdn.studentmanagement.entities.AccountEntity;
-import com.bkdn.studentmanagement.entities.AccountRoleEntity;
-import com.bkdn.studentmanagement.entities.RoleEntity;
-import com.bkdn.studentmanagement.repositories.AccountRepository;
-import com.bkdn.studentmanagement.repositories.AccountRoleRepository;
-import com.bkdn.studentmanagement.repositories.RoleRepository;
+
+import com.bkdn.studentmanagement.models.AccountModel;
+import com.bkdn.studentmanagement.models.AccountRoleModel;
+import com.bkdn.studentmanagement.models.RoleModel;
+
+
+import com.bkdn.studentmanagement.services.AccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 
 
 @Controller
 public class AccountManagementController {
-    @Autowired
-    AccountRepository accountRepository;
+
 
     @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    AccountRoleRepository accountRoleRepository;
-
-    @Autowired
-    private AccountService accountService;
+    AccountService accountService;
 
     @PreAuthorize("hasAuthority('Administrator')")
     @GetMapping("/accounts")
     public String accounts(Model m) {
 
         
-        List<AccountRoleEntity> accountRoleEntities = (List<AccountRoleEntity>) accountRoleRepository.findAll();
-        List<RoleEntity> roleEntities = (List<RoleEntity>) roleRepository.findAll();
-        List<AccountEntity> accountEntities = (List<AccountEntity>) accountRepository.findAll();
+        List<AccountRoleModel> accountRoleModels = (List<AccountRoleModel>) accountService.findAllAccountRoles();
+        List<RoleModel> roleModels = (List<RoleModel>) accountService.findAllRoles();
+        List<AccountModel> accountModels = (List<AccountModel>) accountService.findAllAccounts();
 
         List<AccountInfo> accountInfos = new ArrayList<AccountInfo>();
 
-        RoleEntity roleEntity = new RoleEntity();
-        AccountEntity accountEntity = new AccountEntity();
+        RoleModel roleModel = new RoleModel();
+        AccountModel accountModel = new AccountModel();
 
         int id = 1;
 
-        for (AccountRoleEntity accountRoleEntity : accountRoleEntities) {
-            roleEntity = _getRoleByRoleId(roleEntities, accountRoleEntity.getRoleId());
-            accountEntity = _getAccountByAccountId(accountEntities, accountRoleEntity.getAccountId());
+        for (AccountRoleModel accountRoleModel : accountRoleModels) {
+            roleModel = _getRoleByRoleId(roleModels, accountRoleModel.getRoleId());
+            accountModel = _getAccountByAccountId(accountModels, accountRoleModel.getAccountId());
 
-            accountInfos.add(new AccountInfo(id, accountEntity.getEmail(), accountEntity.getEncrytedPassword(),
-                    accountEntity.getFullName(), roleEntity.getRoleCode(), roleEntity.getRoleName()));
+            accountInfos.add(new AccountInfo(id, accountModel.getEmail(), accountModel.getEncrytedPassword(),
+                    accountModel.getFullName(), roleModel.getRoleCode(), roleModel.getRoleName()));
             id++;
         }
 
@@ -65,19 +58,19 @@ public class AccountManagementController {
 
 
 
-    private RoleEntity _getRoleByRoleId(List<RoleEntity> roleEntities, int roleId) {
-        for (RoleEntity roleEntity : roleEntities) {
-            if (roleEntity.getId().intValue() == roleId) {
-                return roleEntity;
+    private RoleModel _getRoleByRoleId(List<RoleModel> roleModels, int roleId) {
+        for (RoleModel roleModel : roleModels) {
+            if (roleModel.getId().intValue() == roleId) {
+                return roleModel;
             }
         }
         return null;
     }
 
-    private AccountEntity _getAccountByAccountId(List<AccountEntity> accountEntities, int accountId) {
-        for (AccountEntity accountEntity : accountEntities) {
-            if (accountEntity.getId().intValue() == accountId)
-                return accountEntity;
+    private AccountModel _getAccountByAccountId(List<AccountModel> accountModels, int accountId) {
+        for (AccountModel accountModel : accountModels) {
+            if (accountModel.getId().intValue() == accountId)
+                return accountModel;
         }
         return null;
     }
