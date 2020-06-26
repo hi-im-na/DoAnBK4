@@ -32,46 +32,11 @@ public class AccountManagementController {
     public String accounts(Model m) {
 
         
-        List<AccountRoleModel> accountRoleModels = (List<AccountRoleModel>) accountService.findAllAccountRoles();
-        List<RoleModel> roleModels = (List<RoleModel>) accountService.findAllRoles();
-        List<AccountModel> accountModels = (List<AccountModel>) accountService.findAllAccounts();
-
-        List<AccountInfo> accountInfos = new ArrayList<AccountInfo>();
-
-        RoleModel roleModel = new RoleModel();
-        AccountModel accountModel = new AccountModel();
-
-        int id = 1;
-
-        for (AccountRoleModel accountRoleModel : accountRoleModels) {
-            roleModel = _getRoleByRoleId(roleModels, accountRoleModel.getRoleId());
-            accountModel = _getAccountByAccountId(accountModels, accountRoleModel.getAccountId());
-
-            accountInfos.add(new AccountInfo(id, accountModel.getEmail(), accountModel.getEncrytedPassword(),
-                    accountModel.getFullName(), roleModel.getRoleCode(), roleModel.getRoleName()));
-            id++;
-        }
+        List<AccountInfo> accountInfos = accountService.getAccountInfosFromDB();
 
         m.addAttribute("accountInfos", accountInfos);
         return "layouts/admin/pages/accounts";
     }
 
 
-
-    private RoleModel _getRoleByRoleId(List<RoleModel> roleModels, int roleId) {
-        for (RoleModel roleModel : roleModels) {
-            if (roleModel.getId().intValue() == roleId) {
-                return roleModel;
-            }
-        }
-        return null;
-    }
-
-    private AccountModel _getAccountByAccountId(List<AccountModel> accountModels, int accountId) {
-        for (AccountModel accountModel : accountModels) {
-            if (accountModel.getId().intValue() == accountId)
-                return accountModel;
-        }
-        return null;
-    }
 }
