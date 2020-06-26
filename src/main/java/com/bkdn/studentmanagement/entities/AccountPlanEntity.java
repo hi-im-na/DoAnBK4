@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "account_plan", schema = "personnn")
-@NoArgsConstructor
 @AllArgsConstructor
-public class AccountPlan {
+@NoArgsConstructor
+public class AccountPlanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
