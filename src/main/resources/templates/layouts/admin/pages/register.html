@@ -11,27 +11,29 @@
 
 <body>
     <div layout:fragment="content">
-        <form method="POST" id="regForm">
+        <form method="GET" th:action="@{/confirm}">
             <div class="form-group text-center h3" style="padding-top: 0.5rem"> Register </div>
-            <div th:if="${(param.error != null) and (param.error[0] == 'true')}" class="form-group alert-warning">Email already exist</div> 
+            <div th:if="${(param.error != null) and (param.error[0] == 'true')}" class="form-group alert-warning">Email
+                already exist</div>
             <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email" id="regEmail" required> 
+                <input type="email" class="form-control" name="regEmail" placeholder="Email" id="regEmail" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password" id="regPassword" required>
+                <input type="password" class="form-control" name="regPassword" placeholder="Password" id="regPassword"
+                    required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="fullname" placeholder="FullName">
+                <input type="text" class="form-control" name="regName" placeholder="FullName" id="regName">
             </div>
 
             <div class="form-group">
-                <select name="role" id="role" class="custom-select">
+                <select name="regRole" id="regRole" class="custom-select">
                     <option value="Administrator">Administrator</option>
                     <option value="Personal" selected>User</option>
                 </select>
             </div>
             <div class="form-group" style="text-align:center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Next</button>
             </div>
         </form>
 
