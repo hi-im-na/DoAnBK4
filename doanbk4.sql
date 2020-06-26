@@ -80,8 +80,8 @@ INSERT INTO `role` VALUES (2, 'user', 'Personal');
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location`	(
 	`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `location_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    PRIMARY KEY (`id`) USING BTREE
+  `location_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -96,11 +96,11 @@ INSERT INTO `personnn`.`location` (`location_name`) VALUES ('phòng b');
 DROP TABLE IF EXISTS `plan`;
 CREATE TABLE `plan`	(
 	`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `location_id` int(11) UNSIGNED NOT NULL,
-    `begin_time` datetime NOT NULL,
-    `end_time` datetime NOT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-    FOREIGN KEY (`location_id`) REFERENCES `location`(`id`) ON UPDATE CASCADE ON DELETE CASCADE
+  `location_id` int(11) UNSIGNED NOT NULL,
+  `begin_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  FOREIGN KEY (`location_id`) REFERENCES `location`(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
