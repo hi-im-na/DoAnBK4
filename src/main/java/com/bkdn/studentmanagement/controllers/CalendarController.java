@@ -21,7 +21,8 @@ public class CalendarController {
         Integer daysInMonth = planInfoService.getDaysInMonth(month, year);
         Integer firstDay = planInfoService.getDOWByDay1(month, year);
         Integer fixDay = planInfoService.getFixDay(firstDay);
-        TableModel tableModel = new TableModel(daysInMonth, month, year,fixDay);
+        String monthString = planInfoService.monthToString(month);
+        TableModel tableModel = new TableModel(daysInMonth, monthString, year,fixDay);
         m.addAttribute("tableModel", tableModel);
         return "layouts/admin/pages/calendar";
     }

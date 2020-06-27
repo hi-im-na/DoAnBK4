@@ -18,4 +18,5 @@ public interface PlanInfoService {
     public Integer getDaysInMonth(Integer month, Integer year);
     public Integer getDOWByDay1(Integer month, Integer year);
     public Integer getFixDay(Integer DOWByDay1);
+    public String monthToString(Integer month);
 }

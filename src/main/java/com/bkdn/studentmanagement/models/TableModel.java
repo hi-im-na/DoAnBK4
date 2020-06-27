@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TableModel {
     private Integer month;
+    private String monthString;
     private Integer year;
     private Integer daysInMonth;
     private Integer fixDay;
-    private Vector<Pair<Integer,PlanModel> > plans;
-
+    private Vector<Pair<Integer, PlanModel>> plans;
 
     public Integer getMonth() {
         return month;
@@ -41,11 +41,11 @@ public class TableModel {
         this.daysInMonth = daysInMonth;
     }
 
-    public Vector<Pair<Integer,PlanModel>> getPlans() {
+    public Vector<Pair<Integer, PlanModel>> getPlans() {
         return plans;
     }
 
-    public void setPlans(Vector<Pair<Integer,PlanModel>> plans) {
+    public void setPlans(Vector<Pair<Integer, PlanModel>> plans) {
         this.plans = plans;
     }
 
@@ -57,17 +57,19 @@ public class TableModel {
         this.fixDay = fixDay;
     }
 
-    public TableModel(Integer daysInMonth, Integer month, Integer year, Integer fixDay){
+    public String getMonthString() {
+        return monthString;
+    }
+
+    public void setMonthString(String monthString) {
+        this.monthString = monthString;
+    }
+
+    public TableModel(Integer daysInMonth, String monthString, Integer year, Integer fixDay) {
         this.daysInMonth = daysInMonth;
-        this.month = month;
+        this.monthString = monthString;
         this.year = year;
         this.fixDay = fixDay;
     }
-
-
-
-
-
-
 
 }
