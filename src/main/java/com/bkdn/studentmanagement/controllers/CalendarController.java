@@ -1,5 +1,9 @@
 package com.bkdn.studentmanagement.controllers;
 
+import com.bkdn.studentmanagement.models.TableModel;
+import com.bkdn.studentmanagement.services.PlanInfoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,11 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CalendarController {
 
-    String text = "10";
+    @Autowired
+    PlanInfoService planInfoService;
 
+    Integer month = 2, year = 2020;
     @GetMapping("/calendar")
     public String calendar (Model m){
-        m.addAttribute("message", "Hello");
+
+        Integer daysInMonth = planInfoService.getDaysInMonth(month, year);
+        Integer firstDay = planInfoService.getDOWByDay1(month, year);
+        Integer fixDay = planInfoService.getFixDay(firstDay);
+        TableModel tableModel = new TableModel(daysInMonth, month, year,fixDay);
+        m.addAttribute("tableModel", tableModel);
         return "layouts/admin/pages/calendar";
     }
 }

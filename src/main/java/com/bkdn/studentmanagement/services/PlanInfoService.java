@@ -13,4 +13,9 @@ public interface PlanInfoService {
 
     //AccountPlan
     public void addNewAccountPlan(AccountPlanModel accountPlanModel);
+
+    //TableModel
+    public Integer getDaysInMonth(Integer month, Integer year);
+    public Integer getDOWByDay1(Integer month, Integer year);
+    public Integer getFixDay(Integer DOWByDay1);
 }

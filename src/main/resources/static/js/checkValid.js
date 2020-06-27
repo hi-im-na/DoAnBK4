@@ -14,37 +14,28 @@
 //     }
 // }
 
-/*<![CDATA[*/
-
-var message = /*[[${message}]]*/ 'default';
-console.log(message);
-
-/*]]>*/
 
 function createTable() {
-    var ô = document.getElementById("ô");
-    var otrong = document.getElementById("otrong");
-    alert(ô.value);
-    alert(parseInt(otrong.value));
+
     // thiet lap container
     var container = document.getElementById("container");
     // thiet lap so o 
-    var counto = parseInt(ô.value);
-    var countotrong = parseInt(otrong.value);
-    var countô = counto + countotrong;
-    alert(countô);
+    var countCell = parseInt(cell.value);
+    var countAddCell = parseInt(addCell.value);
+    var countCells = countCell + countAddCell;
+    alert(countCell);
     // thiet lap so cot
-    if (countô > 6) var countColumn = 7;
+    if (countCells > 6) var countColumn = 7;
     else var countColumn = 0;
 
     // thiet lap so dong
     if (countColumn > 0) {
-        var countRow = parseInt(countô / countColumn);
+        var countRow = parseInt(countCells / countColumn);
         //alert(countRow);
-        var soODura = countô % countColumn;
+        var soODura = countCells % countColumn;
         //alert(soODura);
     } else {
-        var soODura = countô;
+        var soODura = countCells;
     }
 
     var tagTable = document.createElement("table");
@@ -69,7 +60,7 @@ function createTable() {
     if (soODura != 0) tagTable.appendChild(tagRow);
     while (soODura--) {
         var tagColumn = document.createElement("td");
-        var textNode = document.createTextNode("ádasd");
+        var textNode = document.createTextNode("new");
         tagColumn.appendChild(textNode);
         tagRow.appendChild(tagColumn);
     }

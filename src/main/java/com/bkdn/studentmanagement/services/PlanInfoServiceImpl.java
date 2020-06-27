@@ -1,5 +1,7 @@
 package com.bkdn.studentmanagement.services;
 
+import java.util.Calendar;
+
 import com.bkdn.studentmanagement.entities.AccountPlanEntity;
 import com.bkdn.studentmanagement.entities.LocationEntity;
 import com.bkdn.studentmanagement.entities.PlanEntity;
@@ -57,5 +59,41 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         this.accountPlanRepository.save(accountPlanEntity);
 
     }
+
+    // TableModel
+    @Override
+    public Integer getDaysInMonth(Integer month, Integer year){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        System.out.println("**********"+calendar.get(Calendar.DAY_OF_MONTH) + "**********");
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    @Override
+    public Integer getDOWByDay1(Integer month, Integer year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DATE, 1);
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    @Override
+    public Integer getFixDay(Integer DOWByDay1) {
+        switch (DOWByDay1) {
+            case 2: return 0;
+            case 3: return 1;
+            case 4: return 2;
+            case 5: return 3;
+            case 6: return 4;
+            case 7: return 5;
+            default: return 6;
+        }
+    }
+
+
+
+
 
 }
