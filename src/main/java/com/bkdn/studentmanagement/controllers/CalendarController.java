@@ -14,7 +14,7 @@ public class CalendarController {
     @Autowired
     PlanInfoService planInfoService;
 
-    Integer month = 2, year = 2020;
+    Integer month = 3, year = 2020;
     @GetMapping("/calendar")
     public String calendar (Model m){
 
