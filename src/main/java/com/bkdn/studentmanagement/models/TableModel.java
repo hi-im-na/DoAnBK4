@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class TableModel {
     private Integer month;
     private String monthString;
-    private Integer year;
+    private Integer year;   
     private Integer daysInMonth;
     private Integer fixDay;
     private Vector<Pair<Integer, PlanModel>> plans;

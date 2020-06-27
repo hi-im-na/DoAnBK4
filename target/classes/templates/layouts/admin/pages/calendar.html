@@ -29,7 +29,9 @@
     </div>
 
     <body onload="createTable()"></body>
-    <div id="container"></div>
+    <div id="container">
+
+    </div>
 
     <script th:src="@{/static/js/jquery-3.5.1.min.js}"></script>
     <script th:inline="javascript">
@@ -38,21 +40,24 @@
             var tableModel = /*[[${tableModel}]]*/ '';
             /*]]>*/
             var cell = /*[[${tableModel.getDaysInMonth()}]]*/ '';
+
             var addCell = /*[[${tableModel.getFixDay()}]]*/ '';
 
-            // thiet lap container
+// thiet lap container
             var container = document.getElementById("container");
 
-            // thiet lap so o 
-            var countCell = cell;
+//thiet lap so o hang 1
             var countAddCell = addCell;
-            var countCells = countCell + countAddCell;
+            var countTheRestCellOfFirstRow = 7- countAddCell;
 
-            // thiet lap so cot
+// thiet lap so o con lai trong bang
+            var countCells = cell - countTheRestCellOfFirstRow;
+
+// thiet lap so cot
             if (countCells > 6) var countColumn = 7;
             else var countColumn = 0;
 
-            // thiet lap so dong
+// thiet lap so dong con lai
             if (countColumn > 0) {
                 var countRow = parseInt(countCells / countColumn);
                 var soODura = countCells % countColumn;
@@ -60,12 +65,43 @@
                 var soODura = countCells;
             }
 
+// tao table
             var tagTable = document.createElement("table");
-
-            //them thuoc tinh
+            //them thuoc tinh vao table
             tagTable.setAttribute("class", "table table-bordered");
 
-            // ve bang 
+//DaysOfWeek
+            var daysOW = ["Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            var tagRow = document.createElement("tr");
+            for(var i = 0; i < daysOW.length; i++){
+                var tagColumn = document.createElement("th");
+                var textNode = document.createTextNode(daysOW[i]);
+                tagColumn.appendChild(textNode);
+                tagRow.appendChild(tagColumn);
+            }
+            tagTable.appendChild(tagRow); 
+
+// thiet lap tay dong thu nhat
+            var tagRow = document.createElement("tr");
+            tagTable.appendChild(tagRow);
+            // tao so o trong
+            while(countAddCell--){
+                var tagColumn = document.createElement("td");
+                tagRow.appendChild(tagColumn);
+            }
+            // tao so o con lai trong hang 1
+            while(countTheRestCellOfFirstRow--){
+                var tagColumn = document.createElement("td");
+                var textNode = document.createTextNode("new");
+                var tagButton = document.createElement("button");
+                tagButton.appendChild(textNode);
+                tagButton.setAttribute("class", "btn btn-block");
+                tagColumn.appendChild(tagButton);
+                tagRow.appendChild(tagColumn); 
+            }
+
+
+// ve bang 
             for (var i = 0; i < countRow; i++) {
                 var tagRow = document.createElement("tr");
                 tagTable.appendChild(tagRow);
@@ -75,13 +111,13 @@
                     var textNode = document.createTextNode(i + " - " + j);
                     var tagButton = document.createElement("button");
                     tagButton.appendChild(textNode);
-                    tagColumn.appendChild(tagButton);
                     tagButton.setAttribute("class", "btn btn-block");
+                    tagColumn.appendChild(tagButton);
                     tagRow.appendChild(tagColumn);
                 }
             }
 
-            // ve so o du ra
+// ve so o du ra
             var tagRow = document.createElement("tr");
             if (soODura != 0) tagTable.appendChild(tagRow);
             while (soODura--) {
@@ -94,7 +130,7 @@
                 tagRow.appendChild(tagColumn);
             }
 
-            // them table vao container
+// them table vao container
             container.appendChild(tagTable);
             return true;
         }

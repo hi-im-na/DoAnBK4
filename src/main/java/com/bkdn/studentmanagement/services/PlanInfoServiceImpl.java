@@ -65,9 +65,9 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     public Integer getDaysInMonth(Integer month, Integer year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        System.out.println("**********" + calendar.get(Calendar.DAY_OF_MONTH) + "**********");
-        return calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.MONTH, month-1);
+        System.out.println("**********" + calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + "**********");
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     @Override
