@@ -19,7 +19,7 @@ public class CalendarController {
     @Autowired
     PlanInfoService planInfoService;
 
-    Integer month = 3, year = 2020;
+    Integer month = 6, year = 2020;
     @GetMapping("/calendar")
     public String calendar (Model m){
 
@@ -28,7 +28,9 @@ public class CalendarController {
         Integer fixDay = planInfoService.getFixDay(firstDay);
         String monthString = planInfoService.monthToString(month);
         Vector<Pair<Integer, List<PlanModel>> > plansInMonth = planInfoService.getPlanInfosFromDB(daysInMonth, month, year);
-        TableModel tableModel = new TableModel(fixDay, daysInMonth, month, monthString, year, plansInMonth);
+        System.out.println("xxxxxxxx" + plansInMonth.firstElement().getSecond().get(1).getDate().getDayOfMonth() + "xxxxxxxx");
+        TableModel tableModel = new TableModel(fixDay, daysInMonth, month, monthString, year, plansInMonth,-1);
+        
         m.addAttribute("tableModel", tableModel);
         return "layouts/admin/pages/calendar";
     }

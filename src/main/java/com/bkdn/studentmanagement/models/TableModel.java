@@ -17,6 +17,7 @@ public class TableModel {
     private String monthString;
     private Integer year;
     private Vector<Pair<Integer, List<PlanModel>>> plansInMonth;
+    private Integer DayInPlanCount;
 
     public Integer getMonth() {
         return this.month;
@@ -66,11 +67,25 @@ public class TableModel {
         this.plansInMonth = plansInMonth;
     }
 
+    public Integer getDayInPlanCount() {
+        return DayInPlanCount;
+    }
+
+    public void setDayInPlanCount(Integer DayInPlanCount) {
+        this.DayInPlanCount = DayInPlanCount;
+    }
+
+    public void nextDayInPlanCount(){
+        this.DayInPlanCount++;
+    }
+
     public TableModel(Integer daysInMonth, String monthString, Integer year, Integer fixDay) {
         this.daysInMonth = daysInMonth;
         this.monthString = monthString;
         this.year = year;
         this.fixDay = fixDay;
     }
+
+
 
 }

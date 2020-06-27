@@ -81,7 +81,10 @@ public class PlanInfoServiceImpl implements PlanInfoService {
             //danh sach ngay can lay 
             List<PlanModel> planModels = this.getPlanModelsByDate(date);
 
-            if(planModels != null)  plansInMonth.add(Pair.of(dayOfMonth, planModels));
+            if(planModels.size() != 0)  
+            {
+                plansInMonth.add(Pair.of(dayOfMonth, planModels));
+            }
         }
         return plansInMonth;
     }
