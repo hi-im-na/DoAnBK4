@@ -79,17 +79,17 @@
                 <td><button class="btn btn-block"></button></td>
             </tr>
         </table>
-    </div>
 
-    <form action="" id="myForm">
-        Số ô: <input th:value="${table}" type="text" id="ô">
-        <br>
-        Số ô trống: <input type="text" id="otrong">
-        <br>
-        <!-- <input type="button" value="Tạo table" onclick="return createTable()"> -->
-    </form>
-    <div id="container">
-        <!-- <span th:text="@{message}"> </span> -->
+        <form action="" id="myForm">
+            Số ô: <input th:value="${table}" type="text" id="ô">
+            <br>
+            Số ô trống: <input type="text" id="otrong">
+            <br>
+            <!-- <input type="button" value="Tạo table" onclick="return createTable()"> -->
+        </form>
+        <div id="container">
+            <span th:text="@{message}"> </span>
+        </div>
     </div>
 </body>
 
@@ -99,5 +99,5 @@
 <!-- <script th:src="@{/static/js/checkValid.js}"></script> -->
 <script th:src="@{/static/js/jquery-3.5.1.min.js}"></script>
 <script th:inline="javascript">
-    
+
 </script>

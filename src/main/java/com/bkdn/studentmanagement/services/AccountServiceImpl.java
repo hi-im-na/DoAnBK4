@@ -119,7 +119,6 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountRoleModels;
 
-
     }
 
     @Override
@@ -131,7 +130,7 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
-    //AccountInfo
+    // AccountInfo
     @Override
     public List<AccountInfo> getAccountInfosFromDB() {
         List<AccountRoleEntity> accountRoleEntities = (List<AccountRoleEntity>) accountRoleRepository.findAll();
@@ -145,12 +144,10 @@ public class AccountServiceImpl implements AccountService {
             roleEntity = roleRepository.findOneById(accountRoleEntity.getRoleId());
 
             accountInfos.add(new AccountInfo(id, accountEntity.getEmail(), accountEntity.getEncrytedPassword(), accountEntity.getFullName(), roleEntity.getRoleCode(), roleEntity.getRoleName()));
+            id++;
         }
         return accountInfos;
 
     }
 
-
-
-    
 }
