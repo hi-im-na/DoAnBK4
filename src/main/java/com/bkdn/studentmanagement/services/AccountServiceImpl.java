@@ -38,7 +38,6 @@ public class AccountServiceImpl implements AccountService {
         BeanUtils.copyProperties(accountModel, accountEntity);
 
         this.accountRepository.save(accountEntity);
-        // TODO Auto-generated method stub
 
     }
 
@@ -48,7 +47,6 @@ public class AccountServiceImpl implements AccountService {
         AccountModel accountModel = new AccountModel();
         BeanUtils.copyProperties(accountEntity, accountModel);
         return accountModel;
-        // TODO Auto-generated method stub
     }
 
     @Override
@@ -63,7 +61,6 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountModels;
 
-        // TODO Auto-generated method stub
     }
 
     // RoleModel
@@ -73,7 +70,6 @@ public class AccountServiceImpl implements AccountService {
 
         BeanUtils.copyProperties(roleModel, roleEntity);
         this.roleRepository.save(roleEntity);
-        // TODO Auto-generated method stub
 
     }
 
@@ -83,7 +79,6 @@ public class AccountServiceImpl implements AccountService {
         RoleModel roleModel = new RoleModel();
 
         BeanUtils.copyProperties(roleEntity, roleModel);
-        // TODO Auto-generated method stub
         return roleModel;
     }
 
@@ -99,7 +94,6 @@ public class AccountServiceImpl implements AccountService {
         }
         return roleModels;
 
-        // TODO Auto-generated method stub
     }
 
     // AcountRoleModel
@@ -110,7 +104,6 @@ public class AccountServiceImpl implements AccountService {
         BeanUtils.copyProperties(accountRoleModel, accountRoleEntity);
 
         this.accountRoleRepository.save(accountRoleEntity);
-        // TODO Auto-generated method stub
 
     }
 
@@ -126,7 +119,6 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountRoleModels;
 
-        // TODO Auto-generated method stub
 
     }
 
@@ -136,11 +128,10 @@ public class AccountServiceImpl implements AccountService {
         RoleEntity roleEntity = roleRepository.findOneByName(roleName);
 
         this.accountRoleRepository.save(new AccountRoleEntity(accountEntity.getId(), roleEntity.getId()));
-        // TODO Auto-generated method stub
 
     }
 
-    //
+    //AccountInfo
     @Override
     public List<AccountInfo> getAccountInfosFromDB() {
         List<AccountRoleEntity> accountRoleEntities = (List<AccountRoleEntity>) accountRoleRepository.findAll();
@@ -156,7 +147,6 @@ public class AccountServiceImpl implements AccountService {
             accountInfos.add(new AccountInfo(id, accountEntity.getEmail(), accountEntity.getEncrytedPassword(), accountEntity.getFullName(), roleEntity.getRoleCode(), roleEntity.getRoleName()));
         }
         return accountInfos;
-        // TODO Auto-generated method stub
 
     }
 

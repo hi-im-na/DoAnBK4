@@ -25,7 +25,7 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     @Autowired
     private AccountPlanRepository accountPlanRepository;
 
-// LocationModel
+    // LocationModel
     @Override
     public void addNewLocation(LocationModel locationModel) {
         LocationEntity locationEntity = new LocationEntity();
@@ -33,23 +33,21 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         BeanUtils.copyProperties(locationModel, locationEntity);
 
         this.locationRepository.save(locationEntity);
-        // TODO Auto-generated method stub
 
     }
 
-// PlanModel
+    // PlanModel
     @Override
     public void addNewPlan(PlanModel planModel) {
         PlanEntity planEntity = new PlanEntity();
-        
+
         BeanUtils.copyProperties(planModel, planEntity);
 
         this.planRepository.save(planEntity);
-        // TODO Auto-generated method stub
 
     }
 
-// AccountPlanModel
+    // AccountPlanModel
     @Override
     public void addNewAccountPlan(AccountPlanModel accountPlanModel) {
         AccountPlanEntity accountPlanEntity = new AccountPlanEntity();
@@ -57,10 +55,7 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         BeanUtils.copyProperties(accountPlanModel, accountPlanEntity);
 
         this.accountPlanRepository.save(accountPlanEntity);
-        // TODO Auto-generated method stub
 
     }
-
-
 
 }
