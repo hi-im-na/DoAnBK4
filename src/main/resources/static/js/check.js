@@ -26,3 +26,7 @@
 
 //     $("#confEmail").val(localStorage.getItem("a"));
 // })
+
+function check () {
+    // $("asd").
+}

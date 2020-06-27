@@ -1,6 +1,5 @@
 package com.bkdn.studentmanagement.controllers;
 
-
 import com.bkdn.studentmanagement.configs.models.structures.AccountInfo;
 import com.bkdn.studentmanagement.services.AccountService;
 import com.bkdn.studentmanagement.utils.EncrytedPasswordUtils;
@@ -27,29 +26,19 @@ public class HomeController {
         } else {
             return "redirect:/sign-in";
         }
-    } 
+    }
+
     @Autowired
     AccountService accountService;
-
-
-    @GetMapping("/403")
-    public String error() {
-        return "error/403";
-    }
 
     @GetMapping("/register")
     public String register() {
         return "layouts/admin/pages/register";
     }
 
-
     @PostMapping(value = "/register")
     public String tt(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
             @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
-
-        // System.out.println("**********" + email + " " + pass + "**********");
-        // Kiem tra trung
-        
         AccountModel accountModelCheck = this.accountService.findOneByEmail(email);
         if (accountModelCheck != null) {
             return "redirect:/register?error=true";
@@ -59,7 +48,7 @@ public class HomeController {
 
     @GetMapping("/confirm")
     public String confirm(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
-    @RequestParam("regName") String fullName, @RequestParam("regRole") String role, Model m) {
+            @RequestParam("regName") String fullName, @RequestParam("regRole") String role, Model m) {
         m.addAttribute("accountInfo", new AccountInfo(email, fullName, role));
         return "layouts/admin/pages/confirm";
     }
@@ -67,11 +56,11 @@ public class HomeController {
     @PostMapping("/confirm")
     public String confirmPost(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
             @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
-        
-        accountService.addNewAccount(new AccountModel(email,EncrytedPasswordUtils.encrytedPassword(pass),fullName));
+
+        accountService.addNewAccount(new AccountModel(email, EncrytedPasswordUtils.encrytedPassword(pass), fullName));
         AccountModel accountModel = accountService.findOneByEmail(email);
         RoleModel roleModel = accountService.findOneByName(role);
-        
+
         accountService.addNewAccountRole(new AccountRoleModel(accountModel.getId(), roleModel.getId()));
         return "redirect:/accounts";
     }
