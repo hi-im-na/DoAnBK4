@@ -58,10 +58,8 @@ public class HomeController {
             @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
 
         accountService.addNewAccount(new AccountModel(email, EncrytedPasswordUtils.encrytedPassword(pass), fullName));
-        AccountModel accountModel = accountService.findOneByEmail(email);
-        RoleModel roleModel = accountService.findOneByName(role);
 
-        accountService.addNewAccountRole(new AccountRoleModel(accountModel.getId(), roleModel.getId()));
+        accountService.addNewAccountRole(email, role);
         return "redirect:/accounts";
     }
 }

@@ -2,6 +2,7 @@ package com.bkdn.studentmanagement.services;
 
 import java.util.List;
 
+import com.bkdn.studentmanagement.configs.models.structures.AccountInfo;
 import com.bkdn.studentmanagement.models.AccountModel;
 import com.bkdn.studentmanagement.models.AccountRoleModel;
 import com.bkdn.studentmanagement.models.RoleModel;
@@ -20,7 +21,11 @@ public interface AccountService {
     
     //Account_Role
     public void addNewAccountRole(AccountRoleModel accountRoleModel);
+    public void addNewAccountRole(String email, String roleName);
     public List<AccountRoleModel> findAllAccountRoles();
+
+    //AccountInfo
+    public List<AccountInfo> getAccountInfosFromDB();
     
 
 }
