@@ -13,14 +13,12 @@
 <body>
   <section class="body">
     <div th:replace="layouts/admin/fragments/header :: header"></div>
-    <div class="inner-wrapper">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col" th:replace="layouts/admin/fragments/sidebar-left :: nav"></div>
-          <section role="main" class="content-body col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <div layout:fragment="content"></div>
-          </section>
-        </div>
+    <div class="container-fluid">
+      <div class="row">
+        <aside class="col" th:replace="layouts/admin/fragments/sidebar-left :: nav"></aside>
+        <section role="main" class="content-body col-md-9 ml-sm-auto col-lg-10 px-md-4">
+          <div layout:fragment="content"></div>
+        </section>
       </div>
     </div>
   </section>

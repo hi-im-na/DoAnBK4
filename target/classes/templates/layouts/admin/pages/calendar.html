@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/admin/layout}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- <link rel="stylesheet" href="bootstrap.css"> -->
+    <!-- <link rel="stylesheet" href="calendar.css"> -->
+
 </head>
 
 <body onload="createTable()">
@@ -12,6 +16,86 @@
         <!-- <input type="button" value="Tạo table" onclick="return createTable()"> -->
     </form>
     <div id="container"></div>
+<body>
+    <div layout:fragment="content">
+        <link rel="stylesheet" th:href="@{/static/css/calendar.css}">
+        <div class="container-fluid">
+            <br>
+            <h1 class="text-center">Calendar</h1>
+            <br>
+        </div>
+        <div class="container-fluid">
+            <span class="h3">2020</span><span class="h4">,</span> <span class="h4">August</span>
+        </div>
+        <br>
+        <table class="table table-bordered">
+            <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+            <tr>
+                <td><button class="btn btn-block">1</button></td>
+                <td><button class="btn btn-block">2</button></td>
+                <td><button class="btn btn-block">3</button></td>
+                <td><button class="btn btn-block">4</button></td>
+                <td><button class="btn btn-block">5</button></td>
+                <td><button class="btn btn-block">6</button></td>
+                <td><button class="btn btn-block">7</button></td>
+            </tr>
+            <tr>
+                <td><button class="btn btn-block">8</button></td>
+                <td><button class="btn btn-block">9</button></td>
+                <td><button class="btn btn-block">10</button></td>
+                <td><button class="btn btn-block">11</button></td>
+                <td><button class="btn btn-block">12</button></td>
+                <td><button class="btn btn-block">13</button></td>
+                <td><button class="btn btn-block">14</button></td>
+            </tr>
+            <tr>
+                <td><button class="btn btn-block">15</button></td>
+                <td><button class="btn btn-block">16</button></td>
+                <td><button class="btn btn-block">17</button></td>
+                <td><button class="btn btn-block">18</button></td>
+                <td><button class="btn btn-block">19</button></td>
+                <td><button class="btn btn-block">20</button></td>
+                <td><button class="btn btn-block">21</button></td>
+            </tr>
+            <tr>
+                <td><button class="btn btn-block">22</button></td>
+                <td><button class="btn btn-block">23</button></td>
+                <td><button class="btn btn-block">24</button></td>
+                <td><button class="btn btn-block">25</button></td>
+                <td><button class="btn btn-block">26</button></td>
+                <td><button class="btn btn-block">27</button></td>
+                <td><button class="btn btn-block">28</button></td>
+            </tr>
+            <tr>
+                <td><button class="btn btn-block">29</button></td>
+                <td><button class="btn btn-block">30</button></td>
+                <td><button class="btn btn-block">31</button></td>
+                <td><button class="btn btn-block"></button></td>
+                <td><button class="btn btn-block"></button></td>
+                <td><button class="btn btn-block"></button></td>
+                <td><button class="btn btn-block"></button></td>
+            </tr>
+        </table>
+
+        <form action="" id="myForm">
+            Số ô: <input th:value="${table}" type="text" id="ô">
+            <br>
+            Số ô trống: <input type="text" id="otrong">
+            <br>
+            <!-- <input type="button" value="Tạo table" onclick="return createTable()"> -->
+        </form>
+        <div id="container">
+            <span th:text="@{message}"> </span>
+        </div>
+    </div>
 </body>
 
 
