@@ -1,9 +1,14 @@
 package com.bkdn.studentmanagement.controllers;
 
+import java.util.List;
+import java.util.Vector;
+
+import com.bkdn.studentmanagement.models.PlanModel;
 import com.bkdn.studentmanagement.models.TableModel;
 import com.bkdn.studentmanagement.services.PlanInfoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +27,8 @@ public class CalendarController {
         Integer firstDay = planInfoService.getDOWByDay1(month, year);
         Integer fixDay = planInfoService.getFixDay(firstDay);
         String monthString = planInfoService.monthToString(month);
-        TableModel tableModel = new TableModel(daysInMonth, monthString, year,fixDay);
+        Vector<Pair<Integer, List<PlanModel>> > plansInMonth = planInfoService.getPlanInfosFromDB(daysInMonth, month, year);
+        TableModel tableModel = new TableModel(fixDay, daysInMonth, month, monthString, year, plansInMonth);
         m.addAttribute("tableModel", tableModel);
         return "layouts/admin/pages/calendar";
     }

@@ -29,8 +29,6 @@ public class PlanEntity {
     @Column(name = "date")
     private LocalDate date;
 
-
-
     @Column(name = "begin_time")
     private LocalTime beginTime;
 

@@ -1,6 +1,10 @@
 package com.bkdn.studentmanagement.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Vector;
 
 import com.bkdn.studentmanagement.entities.AccountPlanEntity;
 import com.bkdn.studentmanagement.entities.LocationEntity;
@@ -14,6 +18,7 @@ import com.bkdn.studentmanagement.repositories.PlanRepository;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,6 +54,38 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     }
 
+    @Override
+    public List<PlanModel> convertEntitiesToModels(List<PlanEntity> planEntities) {
+        List<PlanModel> planModels = new ArrayList<PlanModel>();
+        for (PlanEntity planEntity : planEntities) {
+            PlanModel planModel = new PlanModel();
+            BeanUtils.copyProperties(planEntity, planModel);
+            planModels.add(planModel);
+        }
+        return planModels;
+    }
+
+    @Override
+    public List<PlanModel> getPlanModelsByDate(LocalDate Date) {
+        List<PlanEntity> planEntities = planRepository.findPlanEntitiesByDate(Date.toString());
+        List<PlanModel> planModels = this.convertEntitiesToModels(planEntities);
+        return planModels;
+    }
+
+    @Override
+    public Vector<Pair<Integer, List<PlanModel>>> getPlanInfosFromDB(Integer daysInMonth, Integer month, Integer year) {
+        Vector<Pair<Integer, List<PlanModel>>> plansInMonth = new Vector<Pair<Integer, List<PlanModel>>>();
+        for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++) {
+            //ngay can lay
+            LocalDate date = LocalDate.of(year, month, dayOfMonth);
+            //danh sach ngay can lay 
+            List<PlanModel> planModels = this.getPlanModelsByDate(date);
+
+            if(planModels != null)  plansInMonth.add(Pair.of(dayOfMonth, planModels));
+        }
+        return plansInMonth;
+    }
+
     // AccountPlanModel
     @Override
     public void addNewAccountPlan(AccountPlanModel accountPlanModel) {
@@ -65,7 +102,7 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     public Integer getDaysInMonth(Integer month, Integer year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month-1);
+        calendar.set(Calendar.MONTH, month - 1);
         System.out.println("**********" + calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + "**********");
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
@@ -129,4 +166,73 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         }
     }
 
-}
+    }
+
+//     @Override
+//     public String monthToString(Integer month) {
+//         switch (month) {
+//             case 1:
+//                 return "January";
+//             case 2:
+//                 return "February";
+//             case 3:
+//                 return "March";
+//             case 4:
+//                 return "April";
+//             case 5:
+//                 return "May";
+//             case 6:
+//                 return "June";
+//             case 7:
+//                 return "July";
+//             case 8:
+//                 return "August";
+//             case 9:
+//                 return "September";
+//             case 10:
+//                 return "October";
+//             case 11:
+//                 return "November";
+//             default:
+//                 return "December";
+//         }
+//     }
+
+
+
+
+// }   public String monthToString(Integer month) {
+    //     switch (month) {
+    //         case 1:
+    //             return "January";
+    //         case 2:
+    //             return "February";
+    //         case 3:
+    //             return "March";
+    //         case 4:
+    //             return "April";
+    //         case 5:
+    //             return "May";
+    //         case 6:
+    //             return "June";
+    //         case 7:
+    //             return "July";
+    //         case 8:
+    //             return "August";
+    //         case 9:
+    //             return "September";
+    //         case 10:
+    //             return "October";
+    //         case 11:
+    //             return "November";
+    //         default:
+    //             return "December";
+    //     }
+    // }
+
+
+
+
+
+
+// }
