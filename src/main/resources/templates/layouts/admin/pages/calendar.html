@@ -36,12 +36,15 @@
     <script th:src="@{/static/js/jquery-3.5.1.min.js}"></script>
     <script th:inline="javascript">
         function createTable() {
-            /*<![CDATA[*/
+
             var tableModel = /*[[${tableModel}]]*/ '';
-            /*]]>*/
+
             var cell = /*[[${tableModel.getDaysInMonth()}]]*/ '';
 
             var addCell = /*[[${tableModel.getFixDay()}]]*/ '';
+
+            var username = "Sebastian \"Fruity\" Applejuice";
+            alert(username);
 
 // thiet lap container
             var container = document.getElementById("container");

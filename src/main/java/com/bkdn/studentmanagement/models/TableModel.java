@@ -1,7 +1,5 @@
 package com.bkdn.studentmanagement.models;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Vector;
 
 import org.springframework.data.util.Pair;
@@ -12,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class TableModel {
     private Integer month;
     private String monthString;
-    private Integer year;   
+    private Integer year;
     private Integer daysInMonth;
     private Integer fixDay;
     private Vector<Pair<Integer, PlanModel>> plans;
