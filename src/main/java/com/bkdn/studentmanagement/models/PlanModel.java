@@ -48,8 +48,5 @@ public class PlanModel {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
-    }
-    
-
-    
+    }    
 }
