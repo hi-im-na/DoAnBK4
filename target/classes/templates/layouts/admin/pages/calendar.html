@@ -29,14 +29,31 @@
 
     </div>
 
-    <body onload="createTable()"></body>
-    <div id="container">
+    <body>
+        <table>
+            <tr th:each = "Weeks : ${tableModel.getListWeeks()}">
+                <td th:each = "Days : ${Weeks}">
+                    
+                    <div th:if = "${Days.getDay()} != 0" th:text = "${Days.getDay()}"></div>
+                        <div th:if = "${Days.getDay()} != 0" th:each = "planModels : ${Days.getPlanModels()}">
+                        <div th:text = "${tableModel.getLocationNameById(planModels.getLocationId())}">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    
+    </body>
+    <!-- <div id="container"> -->
 
     </div>
 
     <script th:src="@{/static/js/jquery-3.5.1.min.js}"></script>
-    <script th:inline="javascript">
+    <!-- <script th:inline="javascript">
+        
         function createTable() {
+            
+
+
 
             var tableModel = /*[[${ tableModel }]]*/ '';
 
@@ -44,24 +61,13 @@
 
             var addCell = /*[[${ tableModel.getFixDay() }]]*/ '';
 
-            var daysOfMonth = cell;
+            var daysHavePlan =  /*[[${ tableModel.getPlansInMonth().size()}]]*/ '';
+            // alert(daysHavePlan);
 
-            var dayInMonthCount = 26;
+            // mau
+            /*[[${ tableModel.getPlansInMonth().elementAt(tableModel.getDayInMonthCount()).getFirst()}]]*/ ''; // ngay co plan 
 
-            var dayInPlanCount = 0;
-
-            // var username = "Sebastian \"Fruity\" Applejuice";
-
-            alert(/*[[${tableModel.getPlansInMonth().size()}]]*/ '');
-            /*[[${tableModel.nextDayInPlanCount()}]]*/ '';
-
-            var test = /*[[${ tableModel.getPlansInMonth().elementAt(tableModel.getDayInPlanCount()).getFirst()}]]*/ '' ;
-
-            alert(test);
-
-
-
-            // alert(daysOfMonth);
+        
 
             // thiet lap container
             var container = document.getElementById("container");
@@ -109,16 +115,43 @@
                 var tagColumn = document.createElement("td");
                 tagRow.appendChild(tagColumn);
             }
+
             // tao so o con lai trong hang 1
-            while (countTheRestCellOfFirstRow--) {
+            while (countTheRestCellOfFirstRow--) 
+            {
+
+                //alert("**"+(/*[[${tableModel.getKeyDay()}]]*/''));
+                //alert("*"+/*[[${tableModel.getDayInMonthCountOnTable()}]]*/'');
                 var tagColumn = document.createElement("td");
-                var textNode = document.createTextNode("new");
+                var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/'');
                 var tagButton = document.createElement("button");
-                tagButton.appendChild(textNode);
+                var h = document.createElement("p")
                 tagButton.setAttribute("class", "btn btn-block");
+                h.appendChild(textNode);
+                tagButton.appendChild(h);
+                if (/*[[${ tableModel.compTwoVarDayInMonth()}]]*/ '') 
+                {
+                    var planInDayCount = /*[[${ tableModel.getSizeOfPlanModels()}]]*/'';
+                    while (planInDayCount--) 
+                    {
+                        var h = document.createElement("p");
+                        var textNode = document.createTextNode((/*[[${ tableModel.getLocationName()}]]*/''));
+                        h.appendChild(textNode);
+                        tagButton.appendChild(h);
+                        /*[[${tableModel.nextPlanInDayCount()}]]*/'';
+                    }
+                    /*[[${tableModel.setPlanInDayCount(0)}]]*/'';
+                    /*[[${tableModel.nextDayInMonthCount()}]]*/'';
+                    // alert("**"+(/*[[${ tableModel.getKeyDay()}]]*/ ''));
+                    
+                }
+                
                 tagColumn.appendChild(tagButton);
                 tagRow.appendChild(tagColumn);
+                /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/'';
+                // alert("*"+/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
             }
+            
 
 
             // ve bang 
@@ -128,33 +161,42 @@
 
                 for (var j = 0; j < countColumn; j++) {
                     var tagColumn = document.createElement("td");
-                    var textNode = document.createTextNode(i + " - " + j);
+                    var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
                     var tagButton = document.createElement("button");
-                    tagButton.appendChild(textNode);
-                    tagButton.setAttribute("class", "btn btn-block");
+                    var h = document.createElement("p")
+                    h.appendChild(textNode);
+                    tagButton.appendChild(h);
+
                     tagColumn.appendChild(tagButton);
                     tagRow.appendChild(tagColumn);
+                    /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/ '';
                 }
             }
 
             // ve so o du ra
             var tagRow = document.createElement("tr");
             if (soODura != 0) tagTable.appendChild(tagRow);
+
             while (soODura--) {
                 var tagColumn = document.createElement("td");
-                var textNode = document.createTextNode("new");
+                var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
                 var tagButton = document.createElement("button");
-                tagButton.appendChild(textNode);
-                tagColumn.appendChild(tagButton);
+                var h = document.createElement("p")
+                h.appendChild(textNode);
+                tagButton.appendChild(h);
                 tagButton.setAttribute("class", "btn btn-block");
+
+                tagColumn.appendChild(tagButton);
                 tagRow.appendChild(tagColumn);
+                /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/ '';
             }
 
             // them table vao container
             container.appendChild(tagTable);
             return true;
         }
-    </script>
+        /*]]>*/
+    </script> -->
 </div>
 
 </html>

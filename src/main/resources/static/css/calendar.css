@@ -10,6 +10,6 @@
     height: 100%;
 }
 
-table * {
+table th, table td {
     height: 120px;
 }

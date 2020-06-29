@@ -3,6 +3,8 @@ package com.bkdn.studentmanagement.controllers;
 import java.util.List;
 import java.util.Vector;
 
+import com.bkdn.studentmanagement.models.DayModel;
+import com.bkdn.studentmanagement.models.LocationModel;
 import com.bkdn.studentmanagement.models.PlanModel;
 import com.bkdn.studentmanagement.models.TableModel;
 import com.bkdn.studentmanagement.services.PlanInfoService;
@@ -22,15 +24,21 @@ public class CalendarController {
     Integer month = 6, year = 2020;
     @GetMapping("/calendar")
     public String calendar (Model m){
-
-        Integer daysInMonth = planInfoService.getDaysInMonth(month, year);
-        Integer firstDay = planInfoService.getDOWByDay1(month, year);
-        Integer fixDay = planInfoService.getFixDay(firstDay);
-        String monthString = planInfoService.monthToString(month);
-        Vector<Pair<Integer, List<PlanModel>> > plansInMonth = planInfoService.getPlanInfosFromDB(daysInMonth, month, year);
-        System.out.println("xxxxxxxx" + plansInMonth.firstElement().getSecond().get(1).getDate().getDayOfMonth() + "xxxxxxxx");
-        TableModel tableModel = new TableModel(fixDay, daysInMonth, month, monthString, year, plansInMonth,-1);
-        
+        TableModel tableModel = planInfoService.getTableModelByMonthAndYear(month, year);
+        List<List<DayModel>> listWeeks = tableModel.getListWeeks();
+        for(int i = 0; i < listWeeks.size(); i++)
+        {
+            for(int j = 0; j < listWeeks.get(i).size(); j++)
+            {
+                System.out.println(listWeeks.get(i).get(j).getDay());
+                for(int k = 0; k < listWeeks.get(i).get(j).getPlanModels().size(); k++)
+                {
+                    System.out.println(tableModel.getLocationNameById(listWeeks.get(i).get(j).getPlanModels().get(k).getLocationId()));
+                    System.out.println(listWeeks.get(i).get(j).getPlanModels().get(k).getBeginTime());
+                    System.out.println(listWeeks.get(i).get(j).getPlanModels().get(k).getEndTime());
+                }
+            }
+        }
         m.addAttribute("tableModel", tableModel);
         return "layouts/admin/pages/calendar";
     }

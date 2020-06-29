@@ -29,11 +29,8 @@ public class AccountManagementController {
 
     @PreAuthorize("hasAuthority('Administrator')")
     @GetMapping("/accounts")
-    public String accounts(Model m) {
-
-        
+    public String accounts(Model m) {    
         List<AccountInfo> accountInfos = accountService.getAccountInfosFromDB();
-
         m.addAttribute("accountInfos", accountInfos);
         return "layouts/admin/pages/accounts";
     }

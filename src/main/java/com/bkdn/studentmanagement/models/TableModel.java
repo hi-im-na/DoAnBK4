@@ -11,13 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TableModel {
-    private Integer fixDay;
-    private Integer daysInMonth;
     private Integer month;
     private String monthString;
     private Integer year;
-    private Vector<Pair<Integer, List<PlanModel>>> plansInMonth;
-    private Integer DayInPlanCount;
+    private List<LocationModel> locationModels;
+    private List<List<DayModel>> listWeeks;
 
     public Integer getMonth() {
         return this.month;
@@ -43,49 +41,36 @@ public class TableModel {
         this.year = year;
     }
 
-    public Integer getDaysInMonth() {
-        return this.daysInMonth;
+    public List<LocationModel> getLocationModels() {
+        return locationModels;
     }
 
-    public void setDaysInMonth(Integer daysInMonth) {
-        this.daysInMonth = daysInMonth;
+    public void setLocationModels(List<LocationModel> locationModels) {
+        this.locationModels = locationModels;
     }
 
-    public Integer getFixDay() {
-        return this.fixDay;
+    /**
+     * @return List<List<DayModel>> return the listWeeks
+     */
+    public List<List<DayModel>> getListWeeks() {
+        return listWeeks;
     }
 
-    public void setFixDay(Integer fixDay) {
-        this.fixDay = fixDay;
+    /**
+     * @param listWeeks the listWeeks to set
+     */
+    public void setListWeeks(List<List<DayModel>> listWeeks) {
+        this.listWeeks = listWeeks;
     }
 
-    public Vector<Pair<Integer, List<PlanModel>>> getPlansInMonth() {
-        return plansInMonth;
+    public String getLocationNameById(Integer id)
+    {
+        for(LocationModel locationModel : this.locationModels)
+        {
+            if(locationModel.getId() == id) return locationModel.getLocationName();
+        }
+        return null;
     }
-
-    public void setPlansInMonth(Vector<Pair<Integer, List<PlanModel>>> plansInMonth) {
-        this.plansInMonth = plansInMonth;
-    }
-
-    public Integer getDayInPlanCount() {
-        return DayInPlanCount;
-    }
-
-    public void setDayInPlanCount(Integer DayInPlanCount) {
-        this.DayInPlanCount = DayInPlanCount;
-    }
-
-    public void nextDayInPlanCount(){
-        this.DayInPlanCount++;
-    }
-
-    public TableModel(Integer daysInMonth, String monthString, Integer year, Integer fixDay) {
-        this.daysInMonth = daysInMonth;
-        this.monthString = monthString;
-        this.year = year;
-        this.fixDay = fixDay;
-    }
-
 
 
 }
