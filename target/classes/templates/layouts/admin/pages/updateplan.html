@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/admin/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <form th:action="">
+            <div class="form-group">
+                <input type="text" name="title" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <input type="time" name="timeIn">
+            </div>
+            <div class="form-group">
+                <input type="time" name="timeOut">
+            </div>
+            <div class="form-group">
+                <select name="location">
+                    <option th:each="locationModel : ${locationModels}" th:text="${locationModel.getLocationName()}"
+                        th:value="${locationModel.getLocationName()}">
+                    </option>
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</body>
+
+</html>

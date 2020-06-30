@@ -266,9 +266,7 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     public TableModel getTableModelByMonthAndYear(Integer month, Integer year) {
         Integer daysInMonth = this.getDaysInMonth(month, year);
         Integer firstDay = this.getDOWByDay1(month, year);
-        System.out.println("xxxxxxxx" + firstDay);
         Integer fixDayTop = this.getFixDayTop(firstDay);
-        System.out.println("*****" + fixDayTop);
         Integer fixDayBot = this.getFixDayBot(fixDayTop, daysInMonth);
         String monthString = this.monthToString(month);
         List<LocationModel> locationModels = this.getAllLocationModel();

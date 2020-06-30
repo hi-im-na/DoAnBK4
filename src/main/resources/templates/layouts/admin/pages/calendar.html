@@ -25,7 +25,8 @@
             <div class="col">
                 <br>
                 <form th:action="@{/calendar}" method="GET">
-                    <button class="btn" style="float: right;font-size: 50px" name="next" value="1" type="submit"> &gt; </button>
+                    <button class="btn" style="float: right;font-size: 50px" name="next" value="1" type="submit"> &gt;
+                    </button>
                 </form>
                 <!-- dâú phải -->
                 <br>
@@ -58,176 +59,37 @@
 
             <tr th:each="Weeks : ${tableModel.getListWeeks()}">
                 <td th:each="Days : ${Weeks}">
-                    <button class="btn btn-block" style="height: 100%">
-                        <div style="height: 100%">
-                            <div style="background-color: white" th:if="${Days.getDay()} != 0"
-                                th:text="${Days.getDay()}"></div>
-                            <div th:if="${Days.getDay()} != 0" th:each="planModels : ${Days.getPlanModels()}">
-                                <label style="background-color:wheat; border:solid 1px; z-index: 1;"
-                                    th:text="${tableModel.getLocationNameById(planModels.getLocationId()) } + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}">
-                                </label>
+                    <label class="btn-block text-center" style="height: 100%">
+                        <form th:action="@{/newplan}" method="GET">
+                            <input th:text="${tableModel.getMonth()}" type="hidden" name="month">
+                            <input th:text="${tableModel.getYear()}" type="hidden" name="year">
+                            <div style="height: 100%">
+                                <button name="day" style="background-color: white" th:if="${Days.getDay()} != 0"
+                                    th:text="${Days.getDay()}" th:value="${Days.getDay()}"></button>
                             </div>
-                        </div>
-                    </button>
+                            <button class="btn btn-block btn-success" type="submit" th:if="${Days.getDay()} != 0"> +
+                            </button>
+                        </form>
+                        <form th:action="@{/updateplan}" method="GET">
+                            <div th:if="${Days.getDay()} != 0" th:each="planModels : ${Days.getPlanModels()}">
+                                <button style="background-color:wheat; border:solid 1px; z-index: 1;"
+                                    class="btn btn-block" type="submit"
+                                    th:text="${tableModel.getLocationNameById(planModels.getLocationId()) } + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}">
+                                </button>
+                            </div>
+                        </form>
+                    </label>
                 </td>
             </tr>
         </table>
 
     </body>
-    <!-- <div id="container"> -->
+
 
 </div>
 
 <script th:src="@{/static/js/jquery-3.5.1.min.js}"></script>
-<!-- <script th:inline="javascript">
-        
-        function createTable() {
-            
 
-
-
-            var tableModel = /*[[${ tableModel }]]*/ '';
-
-            var cell = /*[[${ tableModel.getDaysInMonth() }]]*/ '';
-
-            var addCell = /*[[${ tableModel.getFixDay() }]]*/ '';
-
-            var daysHavePlan =  /*[[${ tableModel.getPlansInMonth().size()}]]*/ '';
-            // alert(daysHavePlan);
-
-            // mau
-            /*[[${ tableModel.getPlansInMonth().elementAt(tableModel.getDayInMonthCount()).getFirst()}]]*/ ''; // ngay co plan 
-
-        
-
-            // thiet lap container
-            var container = document.getElementById("container");
-
-            //thiet lap so o hang 1
-            var countAddCell = addCell;
-            var countTheRestCellOfFirstRow = 7 - countAddCell;
-
-            // thiet lap so o con lai trong bang
-            var countCells = cell - countTheRestCellOfFirstRow;
-
-            // thiet lap so cot
-            if (countCells > 6) var countColumn = 7;
-            else var countColumn = 0;
-
-            // thiet lap so dong con lai
-            if (countColumn > 0) {
-                var countRow = parseInt(countCells / countColumn);
-                var soODura = countCells % countColumn;
-            } else {
-                var soODura = countCells;
-            }
-
-            // tao table
-            var tagTable = document.createElement("table");
-            //them thuoc tinh vao table
-            tagTable.setAttribute("class", "table table-bordered");
-
-            //DaysOfWeek
-            var daysOW = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            var tagRow = document.createElement("tr");
-            for (var i = 0; i < daysOW.length; i++) {
-                var tagColumn = document.createElement("th");
-                var textNode = document.createTextNode(daysOW[i]);
-                tagColumn.appendChild(textNode);
-                tagRow.appendChild(tagColumn);
-            }
-            tagTable.appendChild(tagRow);
-
-            // thiet lap tay dong thu nhat
-            var tagRow = document.createElement("tr");
-            tagTable.appendChild(tagRow);
-            // tao so o trong
-            while (countAddCell--) {
-                var tagColumn = document.createElement("td");
-                tagRow.appendChild(tagColumn);
-            }
-
-            // tao so o con lai trong hang 1
-            while (countTheRestCellOfFirstRow--) 
-            {
-
-                //alert("**"+(/*[[${tableModel.getKeyDay()}]]*/''));
-                //alert("*"+/*[[${tableModel.getDayInMonthCountOnTable()}]]*/'');
-                var tagColumn = document.createElement("td");
-                var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/'');
-                var tagButton = document.createElement("button");
-                var h = document.createElement("p")
-                tagButton.setAttribute("class", "btn btn-block");
-                h.appendChild(textNode);
-                tagButton.appendChild(h);
-                if (/*[[${ tableModel.compTwoVarDayInMonth()}]]*/ '') 
-                {
-                    var planInDayCount = /*[[${ tableModel.getSizeOfPlanModels()}]]*/'';
-                    while (planInDayCount--) 
-                    {
-                        var h = document.createElement("p");
-                        var textNode = document.createTextNode((/*[[${ tableModel.getLocationName()}]]*/''));
-                        h.appendChild(textNode);
-                        tagButton.appendChild(h);
-                        /*[[${tableModel.nextPlanInDayCount()}]]*/'';
-                    }
-                    /*[[${tableModel.setPlanInDayCount(0)}]]*/'';
-                    /*[[${tableModel.nextDayInMonthCount()}]]*/'';
-                    // alert("**"+(/*[[${ tableModel.getKeyDay()}]]*/ ''));
-                    
-                }
-                
-                tagColumn.appendChild(tagButton);
-                tagRow.appendChild(tagColumn);
-                /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/'';
-                // alert("*"+/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
-            }
-            
-
-
-            // ve bang 
-            for (var i = 0; i < countRow; i++) {
-                var tagRow = document.createElement("tr");
-                tagTable.appendChild(tagRow);
-
-                for (var j = 0; j < countColumn; j++) {
-                    var tagColumn = document.createElement("td");
-                    var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
-                    var tagButton = document.createElement("button");
-                    var h = document.createElement("p")
-                    h.appendChild(textNode);
-                    tagButton.appendChild(h);
-
-                    tagColumn.appendChild(tagButton);
-                    tagRow.appendChild(tagColumn);
-                    /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/ '';
-                }
-            }
-
-            // ve so o du ra
-            var tagRow = document.createElement("tr");
-            if (soODura != 0) tagTable.appendChild(tagRow);
-
-            while (soODura--) {
-                var tagColumn = document.createElement("td");
-                var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
-                var tagButton = document.createElement("button");
-                var h = document.createElement("p")
-                h.appendChild(textNode);
-                tagButton.appendChild(h);
-                tagButton.setAttribute("class", "btn btn-block");
-
-                tagColumn.appendChild(tagButton);
-                tagRow.appendChild(tagColumn);
-                /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/ '';
-            }
-
-            // them table vao container
-            container.appendChild(tagTable);
-            return true;
-        }
-        /*]]>*/
-    </script> -->
 </div>
 
 </html>

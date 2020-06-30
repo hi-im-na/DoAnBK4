@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/admin/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="container-fluid h1"> Add new plan </div>
+        <form th:action="@{/newplan}" method="POST">
+            <!-- <div th:text=""></div> -->
+            <div class="form-group">
+                <input type="text" name="title" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <input type="time" name="timeIn">
+            </div>
+            <div class="form-group">
+                <input type="time" name="timeOut">
+            </div>
+            <div class="form-group">
+                <select name="location">
+                    <option th:each="locationModel : ${locationModels}" th:text="${locationModel.getLocationName()}"
+                        th:value="${locationModel.getLocationId()}">
+                    </option>
+                </select>
+            </div>
+            <button class="btn btn-success" type="submit">Add</button>
+            <button class="btn btn-secondary" type="reset">Reset</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
