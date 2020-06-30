@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlanModel {
     private Integer id;
+    private String title;
     private Integer locationId;
     private LocalDate date;
     private LocalTime beginTime;
@@ -69,4 +70,19 @@ public class PlanModel {
     
 
   
+
+    /**
+     * @return String return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 }
