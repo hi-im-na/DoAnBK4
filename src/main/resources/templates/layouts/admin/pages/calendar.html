@@ -61,13 +61,15 @@
                 <td th:each="Days : ${Weeks}">
                     <label class="btn-block text-center" style="height: 100%">
                         <form th:action="@{/newplan}" method="GET">
-                            <input th:text="${tableModel.getMonth()}" type="hidden" name="month">
-                            <input th:text="${tableModel.getYear()}" type="hidden" name="year">
+                            <input th:value="${tableModel.getMonth()}" type="hidden" name="month">
+                            <input th:value="${tableModel.getYear()}" type="hidden" name="year">
                             <div style="height: 100%">
-                                <button name="day" style="background-color: white" th:if="${Days.getDay()} != 0"
-                                    th:text="${Days.getDay()}" th:value="${Days.getDay()}"></button>
+                                <div style="background-color: white" th:if="${Days.getDay()} != 0"
+                                    th:text="${Days.getDay()}">
+                                </div>
                             </div>
-                            <button class="btn btn-block btn-success" type="submit" th:if="${Days.getDay()} != 0"> +
+                            <button name="day" th:value="${Days.getDay()}" class="btn btn-block btn-success"
+                                type="submit" th:if="${Days.getDay()} != 0"> +
                             </button>
                         </form>
                         <form th:action="@{/updateplan}" method="GET">

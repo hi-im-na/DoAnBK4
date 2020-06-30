@@ -16,18 +16,17 @@
             <div th:if="${(param.error != null) and (param.error[0] == 'true')}" class="form-group alert-warning">Email
                 already exist</div>
             <div class="form-group">
-                <input type="email" class="form-control" name="regEmail" placeholder="Email" id="regEmail" required>
+                <input type="email" class="form-control" name="regEmail" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="regPassword" placeholder="Password" id="regPassword"
-                    required>
+                <input type="password" class="form-control" name="regPassword" placeholder="Password" required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="regName" placeholder="FullName" id="regName">
+                <input type="text" class="form-control" name="regName" placeholder="FullName">
             </div>
 
             <div class="form-group">
-                <select name="regRole" id="regRole" class="custom-select">
+                <select name="regRole" class="custom-select">
                     <option th:each="accountInfos : ${accountInfos}" th:text="${accountInfos.getRoleName()}"
                         th:value="${accountInfos.getRoleName()}"></option>
                 </select>

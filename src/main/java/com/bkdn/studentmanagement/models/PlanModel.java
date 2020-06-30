@@ -59,6 +59,13 @@ public class PlanModel {
         this.beginTime = beginTime;
         this.endTime = endTime;
     }
+
+    public PlanModel(Integer locationId, LocalTime beginTime, LocalTime endTime)
+    {
+        this.locationId = locationId;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+    }
     
 
   
