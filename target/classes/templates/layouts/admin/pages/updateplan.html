@@ -9,10 +9,8 @@
 </head>
 
 <body>
-    <div layout:fragment="content">
-        <div class="container-fluid h1"> Add new plan </div>
-        <form th:action="@{/newplan}" method="POST">
-            <!-- <div th:text=""></div> -->
+    <div class="container-fluid">
+        <form th:action="">
             <div class="form-group">
                 <input type="text" name="title" placeholder="Title">
             </div>
@@ -25,15 +23,14 @@
             <div class="form-group">
                 <select name="location">
                     <option th:each="locationModel : ${locationModels}" th:text="${locationModel.getLocationName()}"
-                        th:value="${locationModel.getLocationId()}">
+                        th:value="${locationModel.getLocationName()}">
                     </option>
                 </select>
             </div>
-            <button class="btn btn-success" type="submit">Add</button>
-            <button class="btn btn-secondary" type="reset">Reset</button>
+            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-danger">Delete</button>
         </form>
     </div>
-
 </body>
 
 </html>

@@ -59,17 +59,26 @@
 
             <tr th:each="Weeks : ${tableModel.getListWeeks()}">
                 <td th:each="Days : ${Weeks}">
-                    <button class="btn btn-block" style="height: 100%">
-                        <div style="height: 100%">
-                            <div style="background-color: white" th:if="${Days.getDay()} != 0"
-                                th:text="${Days.getDay()}"></div>
-                            <div th:if="${Days.getDay()} != 0" th:each="planModels : ${Days.getPlanModels()}">
-                                <label style="background-color:wheat; border:solid 1px; z-index: 1;"
-                                    th:text="${tableModel.getLocationNameById(planModels.getLocationId()) } + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}">
-                                </label>
+                    <label class="btn-block text-center" style="height: 100%">
+                        <form th:action="@{/newplan}" method="GET">
+                            <input th:text="${tableModel.getMonth()}" type="hidden" name="month">
+                            <input th:text="${tableModel.getYear()}" type="hidden" name="year">
+                            <div style="height: 100%">
+                                <button name="day" style="background-color: white" th:if="${Days.getDay()} != 0"
+                                    th:text="${Days.getDay()}" th:value="${Days.getDay()}"></button>
                             </div>
-                        </div>
-                    </button>
+                            <button class="btn btn-block btn-success" type="submit" th:if="${Days.getDay()} != 0"> +
+                            </button>
+                        </form>
+                        <form th:action="@{/updateplan}" method="GET">
+                            <div th:if="${Days.getDay()} != 0" th:each="planModels : ${Days.getPlanModels()}">
+                                <button style="background-color:wheat; border:solid 1px; z-index: 1;"
+                                    class="btn btn-block" type="submit"
+                                    th:text="${tableModel.getLocationNameById(planModels.getLocationId()) } + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}">
+                                </button>
+                            </div>
+                        </form>
+                    </label>
                 </td>
             </tr>
         </table>

@@ -1,9 +1,12 @@
 package com.bkdn.studentmanagement.controllers;
 
+import java.util.List;
+
 import com.bkdn.studentmanagement.configs.models.structures.AccountInfo;
 import com.bkdn.studentmanagement.services.AccountService;
 import com.bkdn.studentmanagement.utils.EncrytedPasswordUtils;
 import com.bkdn.studentmanagement.models.AccountModel;
+import com.bkdn.studentmanagement.models.RoleModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,23 +33,19 @@ public class HomeController {
     AccountService accountService;
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model m) {
+        List<RoleModel> roleModels = accountService.findAllRoles();
+        m.addAttribute("accountInfos", roleModels);
         return "layouts/admin/pages/register";
-    }
-
-    @PostMapping(value = "/register")
-    public String tt(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
-            @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
-        AccountModel accountModelCheck = this.accountService.findOneByEmail(email);
-        if (accountModelCheck != null) {
-            return "redirect:/register?error=true";
-        }
-        return "redirect:/confirm";
     }
 
     @GetMapping("/confirm")
     public String confirm(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
             @RequestParam("regName") String fullName, @RequestParam("regRole") String role, Model m) {
+        AccountModel accountModelCheck = this.accountService.findOneByEmail(email);
+        if (accountModelCheck != null) {
+            return "redirect:/register?error=true";
+        }
         m.addAttribute("accountInfo", new AccountInfo(email, fullName, role));
         return "layouts/admin/pages/confirm";
     }
@@ -54,7 +53,6 @@ public class HomeController {
     @PostMapping("/confirm")
     public String confirmPost(@RequestParam("regEmail") String email, @RequestParam("regPassword") String pass,
             @RequestParam("regName") String fullName, @RequestParam("regRole") String role) {
-
         accountService.addNewAccount(new AccountModel(email, EncrytedPasswordUtils.encrytedPassword(pass), fullName));
         accountService.addNewAccountRole(email, role);
         return "redirect:/accounts";

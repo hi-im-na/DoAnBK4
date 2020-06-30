@@ -19,7 +19,8 @@
                 <input type="email" class="form-control" name="regEmail" placeholder="Email" id="regEmail" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="regPassword" placeholder="Password" id="regPassword" required>
+                <input type="password" class="form-control" name="regPassword" placeholder="Password" id="regPassword"
+                    required>
             </div>
             <div class="form-group">
                 <input type="text" class="form-control" name="regName" placeholder="FullName" id="regName">
@@ -27,8 +28,8 @@
 
             <div class="form-group">
                 <select name="regRole" id="regRole" class="custom-select">
-                    <option value="Administrator">Administrator</option>
-                    <option value="Personal" selected>User</option>
+                    <option th:each="accountInfos : ${accountInfos}" th:text="${accountInfos.getRoleName()}"
+                        th:value="${accountInfos.getRoleName()}"></option>
                 </select>
             </div>
             <div class="form-group" style="text-align:center">

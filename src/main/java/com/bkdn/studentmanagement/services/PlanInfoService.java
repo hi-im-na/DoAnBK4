@@ -22,6 +22,7 @@ public interface PlanInfoService {
 
     public List<LocationModel> getAllLocationModel();
 
+
     // Plan
     public void addNewPlan(PlanModel planModel);
 

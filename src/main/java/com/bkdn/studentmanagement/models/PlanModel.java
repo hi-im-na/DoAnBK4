@@ -3,6 +3,9 @@ package com.bkdn.studentmanagement.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class PlanModel {
     private Integer id;
     private Integer locationId;
@@ -48,5 +51,15 @@ public class PlanModel {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
-    }    
+    }
+
+    public PlanModel(Integer locationId, LocalDate localDate, LocalTime beginTime, LocalTime endTime){
+        this.locationId = locationId;
+        this.date = localDate;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+    }
+    
+
+  
 }
