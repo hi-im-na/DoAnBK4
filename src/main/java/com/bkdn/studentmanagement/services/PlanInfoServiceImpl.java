@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Vector;
 
 import com.bkdn.studentmanagement.entities.AccountPlanEntity;
 import com.bkdn.studentmanagement.entities.LocationEntity;
@@ -18,10 +17,9 @@ import com.bkdn.studentmanagement.models.TableModel;
 import com.bkdn.studentmanagement.repositories.AccountPlanRepository;
 import com.bkdn.studentmanagement.repositories.LocationRepository;
 import com.bkdn.studentmanagement.repositories.PlanRepository;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -98,9 +96,9 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     @Override
     public List<PlanModel> getPlanModelsByDate(LocalDate Date) {
-         
+
         List<PlanModel> planModels = new ArrayList<PlanModel>();
-        if(Date != null) {
+        if (Date != null) {
             List<PlanEntity> planEntities = planRepository.findPlanEntitiesByDate(Date.toString());
             planModels = this.convertEntitiesToModels(planEntities);
         }
@@ -123,25 +121,57 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     public DayModel getDayModel(LocalDate localDate) {
         List<PlanModel> planModels = this.getPlanModelsByDate(localDate);
         Integer day = 0;
-        if(localDate != null)   day = localDate.getDayOfMonth();
+        if (localDate != null)
+            day = localDate.getDayOfMonth();
         return new DayModel(day, planModels);
     }
 
     // TableModel
     @Override
     public Integer getDaysInMonth(Integer month, Integer year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1);
-        System.out.println("**********" + calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + "**********");
-        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        switch (month) {
+            case 1:
+                return 31;
+            case 2: {
+                if (year % 4 == 0) {
+                    if (year % 100 == 0) {
+                        if (year % 400 == 0) {
+                            return 29;
+                        } else
+                            return 28;
+                    } else
+                        return 29;
+                }
+                return 28;
+            }
+            case 3:
+                return 31;
+            case 4:
+                return 30;
+            case 5:
+                return 31;
+            case 6:
+                return 30;
+            case 7:
+                return 31;
+            case 8:
+                return 31;
+            case 9:
+                return 30;
+            case 10:
+                return 31;
+            case 11:
+                return 30;
+            default:
+                return 31;
+        }
     }
 
     @Override
     public Integer getDOWByDay1(Integer month, Integer year) {
         LocalDate localDate = LocalDate.of(year, month, 1);
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
-        return dayOfWeek.getValue()+1;
+        return dayOfWeek.getValue() + 1;
     }
 
     @Override
@@ -236,9 +266,9 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     public TableModel getTableModelByMonthAndYear(Integer month, Integer year) {
         Integer daysInMonth = this.getDaysInMonth(month, year);
         Integer firstDay = this.getDOWByDay1(month, year);
-        System.out.println("xxxxxxxx"+firstDay);
+        System.out.println("xxxxxxxx" + firstDay);
         Integer fixDayTop = this.getFixDayTop(firstDay);
-        System.out.println("*****"+fixDayTop);
+        System.out.println("*****" + fixDayTop);
         Integer fixDayBot = this.getFixDayBot(fixDayTop, daysInMonth);
         String monthString = this.monthToString(month);
         List<LocationModel> locationModels = this.getAllLocationModel();
@@ -246,81 +276,65 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         return new TableModel(month, monthString, year, locationModels, listWeeks);
     }
 
-
-
-
-
-
-
-
-
 }
 
-//     @Override
-//     public String monthToString(Integer month) {
-//         switch (month) {
-//             case 1:
-//                 return "January";
-//             case 2:
-//                 return "February";
-//             case 3:
-//                 return "March";
-//             case 4:
-//                 return "April";
-//             case 5:
-//                 return "May";
-//             case 6:
-//                 return "June";
-//             case 7:
-//                 return "July";
-//             case 8:
-//                 return "August";
-//             case 9:
-//                 return "September";
-//             case 10:
-//                 return "October";
-//             case 11:
-//                 return "November";
-//             default:
-//                 return "December";
-//         }
-//     }
+// @Override
+// public String monthToString(Integer month) {
+// switch (month) {
+// case 1:
+// return "January";
+// case 2:
+// return "February";
+// case 3:
+// return "March";
+// case 4:
+// return "April";
+// case 5:
+// return "May";
+// case 6:
+// return "June";
+// case 7:
+// return "July";
+// case 8:
+// return "August";
+// case 9:
+// return "September";
+// case 10:
+// return "October";
+// case 11:
+// return "November";
+// default:
+// return "December";
+// }
+// }
 
-
-
-
-// }   public String monthToString(Integer month) {
-    //     switch (month) {
-    //         case 1:
-    //             return "January";
-    //         case 2:
-    //             return "February";
-    //         case 3:
-    //             return "March";
-    //         case 4:
-    //             return "April";
-    //         case 5:
-    //             return "May";
-    //         case 6:
-    //             return "June";
-    //         case 7:
-    //             return "July";
-    //         case 8:
-    //             return "August";
-    //         case 9:
-    //             return "September";
-    //         case 10:
-    //             return "October";
-    //         case 11:
-    //             return "November";
-    //         default:
-    //             return "December";
-    //     }
-    // }
-
-
-
-
-
+// } public String monthToString(Integer month) {
+// switch (month) {
+// case 1:
+// return "January";
+// case 2:
+// return "February";
+// case 3:
+// return "March";
+// case 4:
+// return "April";
+// case 5:
+// return "May";
+// case 6:
+// return "June";
+// case 7:
+// return "July";
+// case 8:
+// return "August";
+// case 9:
+// return "September";
+// case 10:
+// return "October";
+// case 11:
+// return "November";
+// default:
+// return "December";
+// }
+// }
 
 // }

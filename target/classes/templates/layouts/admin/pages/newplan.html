@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/admin/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <form th:action="@{/calendar}" method="post">
+            <h1>Create a new plan</h1>
+            <div class="form-group"><input type="text" name="title" placeholder="Title"></div>
+            <div class="form-group"><input type="date" name="date"></div>
+            <div class="form-group"><input type="time" name="time" placeholder="beginTime"> </div>
+            <!-- <div class="form-group"><input type="text" name="aaaa" placeholder="endTime"> </div> -->
+
+            <div class="form-group">
+                <select name="location" id="">
+                    <option value="phòng a">Phòng a</option>
+                    <option value="phòng b">Phòng b</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary form-group">Confirm</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

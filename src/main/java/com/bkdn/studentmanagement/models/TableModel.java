@@ -1,9 +1,6 @@
 package com.bkdn.studentmanagement.models;
 
 import java.util.List;
-import java.util.Vector;
-
-import org.springframework.data.util.Pair;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
