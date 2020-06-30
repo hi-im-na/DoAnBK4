@@ -1,24 +1,25 @@
 package com.bkdn.studentmanagement.services;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Vector;
 
 import com.bkdn.studentmanagement.entities.AccountPlanEntity;
 import com.bkdn.studentmanagement.entities.LocationEntity;
 import com.bkdn.studentmanagement.entities.PlanEntity;
 import com.bkdn.studentmanagement.models.AccountPlanModel;
+import com.bkdn.studentmanagement.models.DayModel;
 import com.bkdn.studentmanagement.models.LocationModel;
 import com.bkdn.studentmanagement.models.PlanModel;
+import com.bkdn.studentmanagement.models.TableModel;
 import com.bkdn.studentmanagement.repositories.AccountPlanRepository;
 import com.bkdn.studentmanagement.repositories.LocationRepository;
 import com.bkdn.studentmanagement.repositories.PlanRepository;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,6 +44,32 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     }
 
+    @Override
+    public LocationModel getLocationModelById(Integer id) {
+        LocationEntity locationEntity = locationRepository.overrideFindById(id);
+        LocationModel locationModel = new LocationModel();
+        BeanUtils.copyProperties(locationEntity, locationModel);
+        return locationModel;
+    }
+
+    @Override
+    public List<LocationModel> convertLocationEntitiesToModels(List<LocationEntity> locationEntities) {
+        List<LocationModel> locationModels = new ArrayList<LocationModel>();
+        for (LocationEntity locationEntity : locationEntities) {
+            LocationModel locationModel = new LocationModel();
+            BeanUtils.copyProperties(locationEntity, locationModel);
+            locationModels.add(locationModel);
+        }
+        return locationModels;
+    }
+
+    @Override
+    public List<LocationModel> getAllLocationModel() {
+        List<LocationEntity> locationEntities = (List<LocationEntity>) locationRepository.findAll();
+        List<LocationModel> locationModels = this.convertLocationEntitiesToModels(locationEntities);
+        return locationModels;
+    }
+
     // PlanModel
     @Override
     public void addNewPlan(PlanModel planModel) {
@@ -56,6 +83,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     @Override
     public List<PlanModel> convertEntitiesToModels(List<PlanEntity> planEntities) {
+        if (planEntities == null)
+            return null;
         List<PlanModel> planModels = new ArrayList<PlanModel>();
         for (PlanEntity planEntity : planEntities) {
             PlanModel planModel = new PlanModel();
@@ -67,26 +96,13 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     @Override
     public List<PlanModel> getPlanModelsByDate(LocalDate Date) {
-        List<PlanEntity> planEntities = planRepository.findPlanEntitiesByDate(Date.toString());
-        List<PlanModel> planModels = this.convertEntitiesToModels(planEntities);
-        return planModels;
-    }
 
-    @Override
-    public Vector<Pair<Integer, List<PlanModel>>> getPlanInfosFromDB(Integer daysInMonth, Integer month, Integer year) {
-        Vector<Pair<Integer, List<PlanModel>>> plansInMonth = new Vector<Pair<Integer, List<PlanModel>>>();
-        for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++) {
-            //ngay can lay
-            LocalDate date = LocalDate.of(year, month, dayOfMonth);
-            //danh sach ngay can lay 
-            List<PlanModel> planModels = this.getPlanModelsByDate(date);
-
-            if(planModels.size() != 0)  
-            {
-                plansInMonth.add(Pair.of(dayOfMonth, planModels));
-            }
+        List<PlanModel> planModels = new ArrayList<PlanModel>();
+        if (Date != null) {
+            List<PlanEntity> planEntities = planRepository.findPlanEntitiesByDate(Date.toString());
+            planModels = this.convertEntitiesToModels(planEntities);
         }
-        return plansInMonth;
+        return planModels;
     }
 
     // AccountPlanModel
@@ -100,27 +116,66 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     }
 
+    // DayModel
+    @Override
+    public DayModel getDayModel(LocalDate localDate) {
+        List<PlanModel> planModels = this.getPlanModelsByDate(localDate);
+        Integer day = 0;
+        if (localDate != null)
+            day = localDate.getDayOfMonth();
+        return new DayModel(day, planModels);
+    }
+
     // TableModel
     @Override
     public Integer getDaysInMonth(Integer month, Integer year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1);
-        System.out.println("**********" + calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + "**********");
-        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        switch (month) {
+            case 1:
+                return 31;
+            case 2: {
+                if (year % 4 == 0) {
+                    if (year % 100 == 0) {
+                        if (year % 400 == 0) {
+                            return 29;
+                        } else
+                            return 28;
+                    } else
+                        return 29;
+                }
+                return 28;
+            }
+            case 3:
+                return 31;
+            case 4:
+                return 30;
+            case 5:
+                return 31;
+            case 6:
+                return 30;
+            case 7:
+                return 31;
+            case 8:
+                return 31;
+            case 9:
+                return 30;
+            case 10:
+                return 31;
+            case 11:
+                return 30;
+            default:
+                return 31;
+        }
     }
 
     @Override
     public Integer getDOWByDay1(Integer month, Integer year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DATE, 1);
-        return calendar.get(Calendar.DAY_OF_WEEK);
+        LocalDate localDate = LocalDate.of(year, month, 1);
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        return dayOfWeek.getValue() + 1;
     }
 
     @Override
-    public Integer getFixDay(Integer DOWByDay1) {
+    public Integer getFixDayTop(Integer DOWByDay1) {
         switch (DOWByDay1) {
             case 2:
                 return 0;
@@ -137,6 +192,11 @@ public class PlanInfoServiceImpl implements PlanInfoService {
             default:
                 return 6;
         }
+    }
+
+    @Override
+    public Integer getFixDayBot(Integer fixDayTop, Integer daysInMonth) {
+        return ((fixDayTop + daysInMonth) % 7 == 0) ? 0 : 7 - (fixDayTop + daysInMonth) % 7;
     }
 
     @Override
@@ -169,73 +229,112 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         }
     }
 
+    @Override
+    public List<List<DayModel>> handleCalendar(Integer daysInMonth, Integer fixDayBot, Integer fixDayTop, Integer month,
+            Integer year) {
+        List<List<DayModel>> listWeeks = new ArrayList<List<DayModel>>();
+        Integer daysInWeek = 7;
+        Integer numOfRow = (daysInMonth + fixDayBot + fixDayTop) / daysInWeek;
+        Integer day = 1;
+        for (int row = 0; row < numOfRow; row++) {
+            List<DayModel> listDays = new ArrayList<DayModel>();
+            for (int col = 0; col < daysInWeek; col++) {
+                if (fixDayTop > 0) {
+                    LocalDate localDate = null;
+                    DayModel dayModel = getDayModel(localDate);
+                    listDays.add(dayModel);
+                    fixDayTop--;
+                } else if (day <= daysInMonth) {
+                    LocalDate localDate = LocalDate.of(year, month, day);
+                    DayModel dayModel = getDayModel(localDate);
+                    listDays.add(dayModel);
+                    day++;
+                } else if (fixDayBot > 0) {
+                    LocalDate localDate = null;
+                    DayModel dayModel = getDayModel(localDate);
+                    listDays.add(dayModel);
+                    fixDayBot--;
+                }
+
+            }
+            listWeeks.add(listDays);
+        }
+        return listWeeks;
     }
 
-//     @Override
-//     public String monthToString(Integer month) {
-//         switch (month) {
-//             case 1:
-//                 return "January";
-//             case 2:
-//                 return "February";
-//             case 3:
-//                 return "March";
-//             case 4:
-//                 return "April";
-//             case 5:
-//                 return "May";
-//             case 6:
-//                 return "June";
-//             case 7:
-//                 return "July";
-//             case 8:
-//                 return "August";
-//             case 9:
-//                 return "September";
-//             case 10:
-//                 return "October";
-//             case 11:
-//                 return "November";
-//             default:
-//                 return "December";
-//         }
-//     }
+    @Override
+    public TableModel getTableModelByMonthAndYear(Integer month, Integer year) {
+        Integer daysInMonth = this.getDaysInMonth(month, year);
+        Integer firstDay = this.getDOWByDay1(month, year);
+        System.out.println("xxxxxxxx" + firstDay);
+        Integer fixDayTop = this.getFixDayTop(firstDay);
+        System.out.println("*****" + fixDayTop);
+        Integer fixDayBot = this.getFixDayBot(fixDayTop, daysInMonth);
+        String monthString = this.monthToString(month);
+        List<LocationModel> locationModels = this.getAllLocationModel();
+        List<List<DayModel>> listWeeks = this.handleCalendar(daysInMonth, fixDayBot, fixDayTop, month, year);
+        return new TableModel(month, monthString, year, locationModels, listWeeks);
+    }
 
+}
 
+// @Override
+// public String monthToString(Integer month) {
+// switch (month) {
+// case 1:
+// return "January";
+// case 2:
+// return "February";
+// case 3:
+// return "March";
+// case 4:
+// return "April";
+// case 5:
+// return "May";
+// case 6:
+// return "June";
+// case 7:
+// return "July";
+// case 8:
+// return "August";
+// case 9:
+// return "September";
+// case 10:
+// return "October";
+// case 11:
+// return "November";
+// default:
+// return "December";
+// }
+// }
 
-
-// }   public String monthToString(Integer month) {
-    //     switch (month) {
-    //         case 1:
-    //             return "January";
-    //         case 2:
-    //             return "February";
-    //         case 3:
-    //             return "March";
-    //         case 4:
-    //             return "April";
-    //         case 5:
-    //             return "May";
-    //         case 6:
-    //             return "June";
-    //         case 7:
-    //             return "July";
-    //         case 8:
-    //             return "August";
-    //         case 9:
-    //             return "September";
-    //         case 10:
-    //             return "October";
-    //         case 11:
-    //             return "November";
-    //         default:
-    //             return "December";
-    //     }
-    // }
-
-
-
-
-
+// } public String monthToString(Integer month) {
+// switch (month) {
+// case 1:
+// return "January";
+// case 2:
+// return "February";
+// case 3:
+// return "March";
+// case 4:
+// return "April";
+// case 5:
+// return "May";
+// case 6:
+// return "June";
+// case 7:
+// return "July";
+// case 8:
+// return "August";
+// case 9:
+// return "September";
+// case 10:
+// return "October";
+// case 11:
+// return "November";
+// default:
+// return "December";
+// }
+// }
 
 // }
