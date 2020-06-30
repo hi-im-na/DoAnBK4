@@ -1,5 +1,7 @@
 package com.bkdn.studentmanagement.controllers;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,25 +23,21 @@ public class CalendarController {
     @Autowired
     PlanInfoService planInfoService;
 
-    Integer month = 6, year = 2020;
+    Integer month = 6;
+    Integer next = -1; 
+    
     @GetMapping("/calendar")
     public String calendar (Model m){
-        TableModel tableModel = planInfoService.getTableModelByMonthAndYear(month, year);
-        List<List<DayModel>> listWeeks = tableModel.getListWeeks();
-        for(int i = 0; i < listWeeks.size(); i++)
+        LocalDate localDate = LocalDate.now();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(localDate.getYear(), localDate.getMonthValue(), 1);
+        if(month != null && next != null)
         {
-            for(int j = 0; j < listWeeks.get(i).size(); j++)
-            {
-                System.out.println(listWeeks.get(i).get(j).getDay());
-                for(int k = 0; k < listWeeks.get(i).get(j).getPlanModels().size(); k++)
-                {
-                    System.out.println(tableModel.getLocationNameById(listWeeks.get(i).get(j).getPlanModels().get(k).getLocationId()));
-                    System.out.println(listWeeks.get(i).get(j).getPlanModels().get(k).getBeginTime());
-                    System.out.println(listWeeks.get(i).get(j).getPlanModels().get(k).getEndTime());
-                }
-            }
-        }
+            calendar.add(Calendar.MONTH, (month - calendar.get(Calendar.MONTH)) + next);
+        } 
+        TableModel tableModel = planInfoService.getTableModelByMonthAndYear(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
         m.addAttribute("tableModel", tableModel);
         return "layouts/admin/pages/calendar";
     }
+    Calendar calendar = Calendar.getInstance();
 }

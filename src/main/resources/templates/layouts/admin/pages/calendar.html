@@ -32,171 +32,21 @@
     <body>
         <table>
             <tr th:each = "Weeks : ${tableModel.getListWeeks()}">
-                <td th:each = "Days : ${Weeks}">
-                    
-                    <div th:if = "${Days.getDay()} != 0" th:text = "${Days.getDay()}"></div>
+                <thread>
+                    <th:block>
+                    <td th:each = "Days : ${Weeks}">
+                        <div th:if = "${Days.getDay()} != 0" th:text = "${Days.getDay()}"></div>
                         <div th:if = "${Days.getDay()} != 0" th:each = "planModels : ${Days.getPlanModels()}">
-                        <div th:text = "${tableModel.getLocationNameById(planModels.getLocationId())}">
-                    </div>
-                </td>
+                            <div th:text = "${tableModel.getLocationNameById(planModels.getLocationId()) } + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}"></div>
+                        </div>
+                    </td>
+                    </th:block>
+                </thread>
             </tr>
         </table>
-    
     </body>
-    <!-- <div id="container"> -->
 
     </div>
 
     <script th:src="@{/static/js/jquery-3.5.1.min.js}"></script>
-    <!-- <script th:inline="javascript">
-        
-        function createTable() {
-            
-
-
-
-            var tableModel = /*[[${ tableModel }]]*/ '';
-
-            var cell = /*[[${ tableModel.getDaysInMonth() }]]*/ '';
-
-            var addCell = /*[[${ tableModel.getFixDay() }]]*/ '';
-
-            var daysHavePlan =  /*[[${ tableModel.getPlansInMonth().size()}]]*/ '';
-            // alert(daysHavePlan);
-
-            // mau
-            /*[[${ tableModel.getPlansInMonth().elementAt(tableModel.getDayInMonthCount()).getFirst()}]]*/ ''; // ngay co plan 
-
-        
-
-            // thiet lap container
-            var container = document.getElementById("container");
-
-            //thiet lap so o hang 1
-            var countAddCell = addCell;
-            var countTheRestCellOfFirstRow = 7 - countAddCell;
-
-            // thiet lap so o con lai trong bang
-            var countCells = cell - countTheRestCellOfFirstRow;
-
-            // thiet lap so cot
-            if (countCells > 6) var countColumn = 7;
-            else var countColumn = 0;
-
-            // thiet lap so dong con lai
-            if (countColumn > 0) {
-                var countRow = parseInt(countCells / countColumn);
-                var soODura = countCells % countColumn;
-            } else {
-                var soODura = countCells;
-            }
-
-            // tao table
-            var tagTable = document.createElement("table");
-            //them thuoc tinh vao table
-            tagTable.setAttribute("class", "table table-bordered");
-
-            //DaysOfWeek
-            var daysOW = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            var tagRow = document.createElement("tr");
-            for (var i = 0; i < daysOW.length; i++) {
-                var tagColumn = document.createElement("th");
-                var textNode = document.createTextNode(daysOW[i]);
-                tagColumn.appendChild(textNode);
-                tagRow.appendChild(tagColumn);
-            }
-            tagTable.appendChild(tagRow);
-
-            // thiet lap tay dong thu nhat
-            var tagRow = document.createElement("tr");
-            tagTable.appendChild(tagRow);
-            // tao so o trong
-            while (countAddCell--) {
-                var tagColumn = document.createElement("td");
-                tagRow.appendChild(tagColumn);
-            }
-
-            // tao so o con lai trong hang 1
-            while (countTheRestCellOfFirstRow--) 
-            {
-
-                //alert("**"+(/*[[${tableModel.getKeyDay()}]]*/''));
-                //alert("*"+/*[[${tableModel.getDayInMonthCountOnTable()}]]*/'');
-                var tagColumn = document.createElement("td");
-                var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/'');
-                var tagButton = document.createElement("button");
-                var h = document.createElement("p")
-                tagButton.setAttribute("class", "btn btn-block");
-                h.appendChild(textNode);
-                tagButton.appendChild(h);
-                if (/*[[${ tableModel.compTwoVarDayInMonth()}]]*/ '') 
-                {
-                    var planInDayCount = /*[[${ tableModel.getSizeOfPlanModels()}]]*/'';
-                    while (planInDayCount--) 
-                    {
-                        var h = document.createElement("p");
-                        var textNode = document.createTextNode((/*[[${ tableModel.getLocationName()}]]*/''));
-                        h.appendChild(textNode);
-                        tagButton.appendChild(h);
-                        /*[[${tableModel.nextPlanInDayCount()}]]*/'';
-                    }
-                    /*[[${tableModel.setPlanInDayCount(0)}]]*/'';
-                    /*[[${tableModel.nextDayInMonthCount()}]]*/'';
-                    // alert("**"+(/*[[${ tableModel.getKeyDay()}]]*/ ''));
-                    
-                }
-                
-                tagColumn.appendChild(tagButton);
-                tagRow.appendChild(tagColumn);
-                /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/'';
-                // alert("*"+/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
-            }
-            
-
-
-            // ve bang 
-            for (var i = 0; i < countRow; i++) {
-                var tagRow = document.createElement("tr");
-                tagTable.appendChild(tagRow);
-
-                for (var j = 0; j < countColumn; j++) {
-                    var tagColumn = document.createElement("td");
-                    var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
-                    var tagButton = document.createElement("button");
-                    var h = document.createElement("p")
-                    h.appendChild(textNode);
-                    tagButton.appendChild(h);
-
-                    tagColumn.appendChild(tagButton);
-                    tagRow.appendChild(tagColumn);
-                    /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/ '';
-                }
-            }
-
-            // ve so o du ra
-            var tagRow = document.createElement("tr");
-            if (soODura != 0) tagTable.appendChild(tagRow);
-
-            while (soODura--) {
-                var tagColumn = document.createElement("td");
-                var textNode = document.createTextNode(/*[[${tableModel.getDayInMonthCountOnTable()}]]*/ '');
-                var tagButton = document.createElement("button");
-                var h = document.createElement("p")
-                h.appendChild(textNode);
-                tagButton.appendChild(h);
-                tagButton.setAttribute("class", "btn btn-block");
-
-                tagColumn.appendChild(tagButton);
-                tagRow.appendChild(tagColumn);
-                /*[[${tableModel.nextDayInMonthCountOnTable()}]]*/ '';
-            }
-
-            // them table vao container
-            container.appendChild(tagTable);
-            return true;
-        }
-        /*]]>*/
-    </script> -->
-</div>
-
 </html>

@@ -63,14 +63,12 @@ public class TableModel {
         this.listWeeks = listWeeks;
     }
 
-    public String getLocationNameById(Integer id)
-    {
-        for(LocationModel locationModel : this.locationModels)
-        {
-            if(locationModel.getId() == id) return locationModel.getLocationName();
+    public String getLocationNameById(Integer id) {
+        for (LocationModel locationModel : this.locationModels) {
+            if (locationModel.getId() == id)
+                return locationModel.getLocationName();
         }
         return null;
     }
-
 
 }
