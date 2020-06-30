@@ -1,15 +1,17 @@
 package com.bkdn.studentmanagement.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class PlanModel {
     private Integer id;
     private Integer locationId;
-    private LocalDateTime beginTime;
-    private LocalDateTime endTime;
-    
+    private LocalDate date;
+    private LocalTime beginTime;
+    private LocalTime endTime;
+
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -17,27 +19,37 @@ public class PlanModel {
     }
 
     public Integer getLocationId() {
-        return locationId;
+        return this.locationId;
     }
 
     public void setLocationId(Integer locationId) {
         this.locationId = locationId;
     }
 
-    public LocalDateTime getBeginTime() {
-        return beginTime;
+    public LocalDate getDate() {
+        return this.date;
     }
 
-    public void setBeginTime(LocalDateTime beginTime) {
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getBeginTime() {
+        return this.beginTime;
+    }
+
+    public void setBeginTime(LocalTime beginTime) {
         this.beginTime = beginTime;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public LocalTime getEndTime() {
+        return this.endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
+    
+
     
 }

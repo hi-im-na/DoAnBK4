@@ -1,6 +1,7 @@
 package com.bkdn.studentmanagement.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,11 +26,14 @@ public class PlanEntity {
     @Column(name = "location_id")
     private Integer locationId;
 
+    @Column(name = "date")
+    private LocalDate date;
+
     @Column(name = "begin_time")
-    private LocalDateTime beginTime;
+    private LocalTime beginTime;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     public Integer getId() {
         return id;
@@ -47,19 +51,27 @@ public class PlanEntity {
         this.locationId = locationId;
     }
 
-    public LocalDateTime getBeginTime() {
+    public LocalDate getDate() {
+        return this.date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+    
+    public LocalTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(LocalDateTime beginTime) {
+    public void setBeginTime(LocalTime beginTime) {
         this.beginTime = beginTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

@@ -1,73 +1,71 @@
 package com.bkdn.studentmanagement.models;
 
-import java.util.Vector;
+import java.util.List;
 
-import org.springframework.data.util.Pair;
-
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@AllArgsConstructor
 public class TableModel {
     private Integer month;
     private String monthString;
     private Integer year;
-    private Integer daysInMonth;
-    private Integer fixDay;
-    private Vector<Pair<Integer, PlanModel>> plans;
+    private List<LocationModel> locationModels;
+    private List<List<DayModel>> listWeeks;
 
     public Integer getMonth() {
-        return month;
+        return this.month;
     }
 
     public void setMonth(Integer month) {
         this.month = month;
     }
 
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Integer getDaysInMonth() {
-        return daysInMonth;
-    }
-
-    public void setDaysInMonth(Integer daysInMonth) {
-        this.daysInMonth = daysInMonth;
-    }
-
-    public Vector<Pair<Integer, PlanModel>> getPlans() {
-        return plans;
-    }
-
-    public void setPlans(Vector<Pair<Integer, PlanModel>> plans) {
-        this.plans = plans;
-    }
-
-    public Integer getFixDay() {
-        return fixDay;
-    }
-
-    public void setFixDay(Integer fixDay) {
-        this.fixDay = fixDay;
-    }
-
     public String getMonthString() {
-        return monthString;
+        return this.monthString;
     }
 
     public void setMonthString(String monthString) {
         this.monthString = monthString;
     }
 
-    public TableModel(Integer daysInMonth, String monthString, Integer year, Integer fixDay) {
-        this.daysInMonth = daysInMonth;
-        this.monthString = monthString;
+    public Integer getYear() {
+        return this.year;
+    }
+
+    public void setYear(Integer year) {
         this.year = year;
-        this.fixDay = fixDay;
+    }
+
+    public List<LocationModel> getLocationModels() {
+        return locationModels;
+    }
+
+    public void setLocationModels(List<LocationModel> locationModels) {
+        this.locationModels = locationModels;
+    }
+
+    /**
+     * @return List<List<DayModel>> return the listWeeks
+     */
+    public List<List<DayModel>> getListWeeks() {
+        return listWeeks;
+    }
+
+    /**
+     * @param listWeeks the listWeeks to set
+     */
+    public void setListWeeks(List<List<DayModel>> listWeeks) {
+        this.listWeeks = listWeeks;
+    }
+
+    public String getLocationNameById(Integer id) {
+        for (LocationModel locationModel : this.locationModels) {
+            if (locationModel.getId() == id)
+                return locationModel.getLocationName();
+        }
+        return null;
     }
 
 }

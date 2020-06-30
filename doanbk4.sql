@@ -97,8 +97,9 @@ DROP TABLE IF EXISTS `plan`;
 CREATE TABLE `plan`	(
 	`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `location_id` int(11) UNSIGNED NOT NULL,
-  `begin_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL,
+  `date` date NOT NULL,
+  `begin_time` time NOT NULL,
+  `end_time` time NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   FOREIGN KEY (`location_id`) REFERENCES `location`(`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -106,8 +107,8 @@ CREATE TABLE `plan`	(
 -- ----------------------------
 -- Records of plan
 -- ----------------------------
-INSERT INTO `personnn`.`plan` (`location_id`, `begin_time`, `end_time`) VALUES ('1', '2020-06-26 10:10:00', '2020-06-26 10:15:00');
-INSERT INTO `personnn`.`plan` (`location_id`, `begin_time`, `end_time`) VALUES ('2', '2020-06-26 10:10:00', '2020-06-26 10:10:00');
+INSERT INTO `personnn`.`plan` (`location_id`, `date`, `begin_time`, `end_time`) VALUES ('1','2020-06-26', '10:10:00', '10:15:00');
+INSERT INTO `personnn`.`plan` (`location_id`, `date`, `begin_time`, `end_time`) VALUES ('2', '2020-06-26', '10:10:00', '10:10:00');
 
 -- ----------------------------
 -- Table structure for account_plan
