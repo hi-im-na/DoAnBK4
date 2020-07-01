@@ -4,6 +4,16 @@
 <div layout:fragment="content">
     <link rel="stylesheet" th:href="@{/static/css/calendar.css}">
     <script th:src="@{/static/js/check.js}"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <div class="toast m-md-5" th:if="${(param.error != null) and (param.error[0] == 'true')}" data-autohide="false">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">Add error</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body">
+            Some text inside the toast body
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col">
@@ -74,12 +84,23 @@
                         </form>
                         <form th:action="@{/updateplan}" method="GET">
                             <div th:if="${Days.getDay()} != 0" th:each="planModels : ${Days.getPlanModels()}">
-                                <button style="background-color:wheat; border:solid 1px; z-index: 1;"
-                                    class="btn btn-block" type="submit"
-                                    th:text="${tableModel.getLocationNameById(planModels.getLocationId())} + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}"
-                                    th:value="${planModels.getDate().toString()} + ${planModels.getBeginTime().toString()} + ${planModels.getEndTime().toString()}+ ' ' + ${planModels.getLocationId()} + ' ' + ${planModels.getTitle()}"
-                                    name="planModelString">
-                                </button>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-10" style="padding: 0">
+                                            <button
+                                                style="background-color:wheat; border:solid 1px; z-index: 1;"
+                                                class="btn btn-block" type="submit"
+                                                th:text="${tableModel.getLocationNameById(planModels.getLocationId())} + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}"
+                                                th:value="${planModels.getDate().toString()} + ${planModels.getBeginTime().toString()} + ${planModels.getEndTime().toString()}+ ' ' + ${planModels.getLocationId()} + ' ' + ${planModels.getTitle()}"
+                                                name="planModelString">
+                                            </button>
+                                        </div>
+                                        <div class="col-2" style="padding: 0">
+                                            <button class="btn btn-danger btn-block"
+                                                style=" border:solid 1px; z-index: 1">-</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </label>
