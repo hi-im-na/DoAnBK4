@@ -110,10 +110,12 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     @Override
-    public PlanModel findPlanModelByTitle(String title) {
-        PlanEntity planEntity = planRepository.findPlanEntityByTitle(title);
+    public PlanModel findPlanModelByTitle(String title, String date) {
+        PlanEntity planEntity = planRepository.findPlanEntityByTitle(title, date);
         PlanModel planModel = new PlanModel();
-        BeanUtils.copyProperties(planEntity, planModel);
+        if (planEntity != null)
+            BeanUtils.copyProperties(planEntity, planModel);
+        else return null;
         return planModel;
     }
 
@@ -202,7 +204,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     // TableModel
     /**
-     *Dùng để tính số ngày trong tháng được chỉ định 
+     * Dùng để tính số ngày trong tháng được chỉ định
+     * 
      * @param month
      * @param year
      */
@@ -247,7 +250,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     /**
-     *Dùng để lấy thứ của ngày 1 
+     * Dùng để lấy thứ của ngày 1
+     * 
      * @param month
      * @param year
      */
@@ -259,7 +263,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     /**
-     *Dùng để tạo số ô dư trên
+     * Dùng để tạo số ô dư trên
+     * 
      * @param DOWByDay1
      */
     @Override
@@ -283,7 +288,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     /**
-     *Dùng để tạo số ô dư dưới 
+     * Dùng để tạo số ô dư dưới
+     * 
      * @param fixDayTop
      * @param daysInMonth
      */
@@ -293,7 +299,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     /**
-     *Dùng để chuyển tháng số sang tháng chữ 
+     * Dùng để chuyển tháng số sang tháng chữ
+     * 
      * @param month
      */
     @Override
@@ -327,7 +334,9 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     /**
-     *Dùng để vẻ bảng với các thông số đầu vào là các ô dư trên, dư dưới, và số ngày trong tháng đó
+     * Dùng để vẻ bảng với các thông số đầu vào là các ô dư trên, dư dưới, và số
+     * ngày trong tháng đó
+     * 
      * @param daysInMonth
      * @param fixDayBot
      * @param fixDayTop
@@ -368,7 +377,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     /**
-     *Lấy tableModel bằng năm và tháng
+     * Lấy tableModel bằng năm và tháng
+     * 
      * @param month
      * @param year
      */
@@ -383,7 +393,5 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         List<List<DayModel>> listWeeks = this.handleCalendar(daysInMonth, fixDayBot, fixDayTop, month, year);
         return new TableModel(month, monthString, year, locationModels, listWeeks);
     }
-
-    
 
 }

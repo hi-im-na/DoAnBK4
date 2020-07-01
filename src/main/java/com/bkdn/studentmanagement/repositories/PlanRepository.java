@@ -13,8 +13,8 @@ public interface PlanRepository extends CrudRepository<PlanEntity, Integer>{
     @Query(value = "Select * from plan p where p.date = ?1", nativeQuery = true)
     List<PlanEntity> findPlanEntitiesByDate(String Date);
 
-    @Query(value = "Select * from plan p where p.title = ?1", nativeQuery = true)
-    PlanEntity findPlanEntityByTitle(String title);
+    @Query(value = "Select * from plan p where p.title = ?1 and p.date = ?2", nativeQuery = true)
+    PlanEntity findPlanEntityByTitle(String title, String date);
 
     @Transactional
     @Modifying

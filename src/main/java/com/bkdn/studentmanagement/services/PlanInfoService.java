@@ -34,7 +34,7 @@ public interface PlanInfoService {
 
     public void UpdatePlanModelById(String title, Integer location_id, String date, String begin_time, String end_time, Integer id);
 
-    public PlanModel findPlanModelByTitle(String title);
+    public PlanModel findPlanModelByTitle(String title, String date);
 
     public List<PlanModel> convertEntitiesToModels(List<PlanEntity> planEntities);
 

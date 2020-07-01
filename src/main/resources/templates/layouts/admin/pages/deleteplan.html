@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/admin/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="container-fluid">
+            <form th:action="@{/deleteplan}" method="POST">
+                <div class="form-group">
+                    Title <input type="text" class="form-control" name="delete_title" th:value="${planModel.getTitle()}"
+                        disabled>
+
+                </div>
+                <div class="form-group">
+                    Time in <input type="time" class="form-control" name="delete_beginTime"
+                        th:value="${planModel.getBeginTime()}" disabled>
+                </div>
+                <div class="form-group">
+                    Time out <input type="time" class="form-control" name="delete_endTime"
+                        th:value="${planModel.getEndTime()}" disabled>
+                </div>
+                <div class="form-group">
+                    Date <input class="form-control" type="text" name="delete_date"
+                        th:value="${planModel.getDate().toString()}" disabled>
+                </div>
+                <div class="form-group">
+                    Location
+                    <input name="delete_location" type="text" class="form-control" th:value="${locationName}" disabled>
+                </div>
+                <div>
+                    <button name="update_delete" value="delete" class="btn btn-warning form-control"
+                        type="submit">Delete</button>
+                </div>
+                <input type="text" name="delete_title" th:value="${planModel.getTitle()}" hidden>
+                <input type="text" name="delete_beginTime" th:value="${planModel.getBeginTime()}" hidden>
+                <input type="text" name="delete_endTime" th:value="${planModel.getEndTime()}" hidden>
+                <input type="text" name="delete_date" th:value="${planModel.getDate().toString()}" hidden>
+                <input type="text" name="delete_location" th:value="${locationName}" hidden>
+                <!-- disable ko lay dc thong tin khi dung requestparam -->
+            </form>
+
+
+
+
+            <!-- 
+            <form th:action="@{/deleteplan}" method="post">
+                <input type="text" name="delete_title" th:value="${planModel.getTitle()}">
+                <input type="text" name="delete_beginTime">
+                <input type="text" name="delete_endTime">
+                <input type="text" name="delete_date">
+                <input type="text" name="delete_location">
+                <button type="submit">asdasd</button>
+            </form> -->
+
+        </div>
+    </div>
+</body>
+
+</html>
