@@ -9,27 +9,34 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <form th:action="">
-            <div class="form-group">
-                <input type="text" name="title" placeholder="Title">
-            </div>
-            <div class="form-group">
-                <input type="time" name="timeIn">
-            </div>
-            <div class="form-group">
-                <input type="time" name="timeOut">
-            </div>
-            <div class="form-group">
-                <select name="location">
-                    <option th:each="locationModel : ${locationModels}" th:text="${locationModel.getLocationName()}"
-                        th:value="${locationModel.getLocationName()}">
-                    </option>
-                </select>
-            </div>
-            <button class="btn btn-primary" type="submit">Update</button>
+    <div layout:fragment="content">
+        <div class="container-fluid">
+            <form th:action="@{/updateplan}" method="POST">
+                <div class="form-group">
+                    Title <input type="text" name="update_title" th:value="${planModel.getTitle()}" required>
+                </div>
+                <div class="form-group">
+                    Time in <input type="time" name="update_beginTime" th:value="${planModel.getBeginTime()}">
+                </div>
+                <div class="form-group">
+                    Time out <input type="time" name="update_endTime" th:value="${planModel.getEndTime()}">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="update_date"
+                        th:value="${planModel.getDate().toString()}" hidden>
+                </div>
+                <div class="form-group">
+                    <select name="location">
+                        <option th:each="locationModel : ${locationModels}" th:text="${locationModel.getLocationName()}"
+                            th:value="${locationModel.getId()}">
+                        </option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+            <form action="">
             <button class="btn btn-danger">Delete</button>
-        </form>
+        </div>
     </div>
 </body>
 

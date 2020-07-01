@@ -31,4 +31,8 @@ public class AccountPlanModel {
         this.planId = planId;
     }
 
+    public AccountPlanModel(Integer accountId, Integer planId){
+        this.accountId = accountId;
+        this.planId = planId;
+    }
 }

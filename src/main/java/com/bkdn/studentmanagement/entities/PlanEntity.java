@@ -23,6 +23,9 @@ public class PlanEntity {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "location_id")
     private Integer locationId;
 
@@ -39,6 +42,20 @@ public class PlanEntity {
         return id;
     }
 
+    /**
+     * @return String return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
     public void setId(Integer id) {
         this.id = id;
     }
@@ -74,5 +91,8 @@ public class PlanEntity {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
+
+
+
 
 }

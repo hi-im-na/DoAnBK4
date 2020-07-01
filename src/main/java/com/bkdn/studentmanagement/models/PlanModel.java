@@ -22,6 +22,20 @@ public class PlanModel {
         this.id = id;
     }
 
+    /**
+     * @return String return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Integer getLocationId() {
         return this.locationId;
     }
@@ -54,7 +68,8 @@ public class PlanModel {
         this.endTime = endTime;
     }
 
-    public PlanModel(Integer locationId, LocalDate localDate, LocalTime beginTime, LocalTime endTime){
+    public PlanModel(String title ,Integer locationId, LocalDate localDate, LocalTime beginTime, LocalTime endTime){
+        this.title = title;
         this.locationId = locationId;
         this.date = localDate;
         this.beginTime = beginTime;
@@ -67,22 +82,12 @@ public class PlanModel {
         this.beginTime = beginTime;
         this.endTime = endTime;
     }
+
+    
     
 
   
 
-    /**
-     * @return String return the title
-     */
-    public String getTitle() {
-        return title;
-    }
 
-    /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
 }

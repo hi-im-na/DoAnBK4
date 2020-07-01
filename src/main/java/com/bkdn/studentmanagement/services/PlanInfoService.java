@@ -22,6 +22,8 @@ public interface PlanInfoService {
 
     public List<LocationModel> getAllLocationModel();
 
+    public String getLocationNameById(Integer id);
+
 
     // Plan
     public void addNewPlan(PlanModel planModel);
@@ -29,6 +31,12 @@ public interface PlanInfoService {
     public List<PlanModel> convertEntitiesToModels(List<PlanEntity> planEntities);
 
     public List<PlanModel> getPlanModelsByDate(LocalDate Date);
+
+    public PlanModel getPlanModelByTitle(List<PlanModel> planModels, String title);
+
+    public PlanModel getPlanModelByTitleAndDate(LocalDate date, String title);
+
+    public PlanModel getPlanModelFromPlanModelString(String planModelString);
 
     // AccountPlan
     public void addNewAccountPlan(AccountPlanModel accountPlanModel);

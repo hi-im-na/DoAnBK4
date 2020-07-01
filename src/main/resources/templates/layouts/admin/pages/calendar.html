@@ -76,7 +76,9 @@
                             <div th:if="${Days.getDay()} != 0" th:each="planModels : ${Days.getPlanModels()}">
                                 <button style="background-color:wheat; border:solid 1px; z-index: 1;"
                                     class="btn btn-block" type="submit"
-                                    th:text="${tableModel.getLocationNameById(planModels.getLocationId()) } + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}">
+                                    th:text="${tableModel.getLocationNameById(planModels.getLocationId())} + ' ' + ${planModels.getBeginTime()}+ '-' + ${planModels.getEndTime()}"
+                                    th:value="${planModels.getDate().toString()} + ${planModels.getBeginTime().toString()} + ${planModels.getEndTime().toString()}+ ' ' + ${planModels.getLocationId()} + ' ' + ${planModels.getTitle()}"
+                                    name="planModelString">
                                 </button>
                             </div>
                         </form>

@@ -35,7 +35,7 @@ CREATE TABLE `account`  (
 -- Records of account
 -- ----------------------------
 INSERT INTO `account` VALUES (1, 'phuongnh@rikkeisoft.com', '$2a$10$fHd2qSm7QxjFnHcol2VRHOfy.HlLnavWSg3cd.cGMkxbbIGfYwU2.', 'Nguyen Ho Phuong');
-INSERT INTO `personnn`.`account` (`id`, `email`, `encryted_password`, `full_name`) VALUES ('2', 'thuan@gmail.com', '$10$fHd2qSm7QxjFnHcol2VRHOfy.HlLnavWSg3cd.cGMkxbbIGfYwU2.', 'Bui Sy Thuan');
+INSERT INTO `personnn`.`account` (`id`, `email`, `encryted_password`, `full_name`) VALUES ('2', 'thuan@gmail.com', '$2a$10$fHd2qSm7QxjFnHcol2VRHOfy.HlLnavWSg3cd.cGMkxbbIGfYwU2.', 'Bui Sy Thuan');
 
 -- ----------------------------
 -- Table structure for account_role
@@ -96,6 +96,7 @@ INSERT INTO `personnn`.`location` (`location_name`) VALUES ('phòng b');
 DROP TABLE IF EXISTS `plan`;
 CREATE TABLE `plan`	(
 	`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL NOT NULL,
   `location_id` int(11) UNSIGNED NOT NULL,
   `date` date NOT NULL,
   `begin_time` time NOT NULL,
@@ -107,8 +108,8 @@ CREATE TABLE `plan`	(
 -- ----------------------------
 -- Records of plan
 -- ----------------------------
-INSERT INTO `personnn`.`plan` (`location_id`, `date`, `begin_time`, `end_time`) VALUES ('1','2020-06-26', '10:10:00', '10:15:00');
-INSERT INTO `personnn`.`plan` (`location_id`, `date`, `begin_time`, `end_time`) VALUES ('2', '2020-06-26', '10:10:00', '10:10:00');
+INSERT INTO `personnn`.`plan` (`title`, `location_id`, `date`, `begin_time`, `end_time`) VALUES ('hop', '1','2020-06-26', '10:10:00', '10:15:00');
+INSERT INTO `personnn`.`plan` (`title`, `location_id`, `date`, `begin_time`, `end_time`) VALUES ('phong van', '2', '2020-06-26', '10:10:00', '10:10:00');
 
 -- ----------------------------
 -- Table structure for account_plan

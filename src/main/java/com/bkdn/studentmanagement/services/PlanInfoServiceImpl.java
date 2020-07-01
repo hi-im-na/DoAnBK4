@@ -2,6 +2,7 @@ package com.bkdn.studentmanagement.services;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -70,6 +71,15 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         return locationModels;
     }
 
+    @Override
+    public String getLocationNameById(Integer id) {
+        for (LocationModel locationModel : this.getAllLocationModel()) {
+            if (locationModel.getId() == id)
+                return locationModel.getLocationName();
+        }
+        return null;
+    }
+
     // PlanModel
     @Override
     public void addNewPlan(PlanModel planModel) {
@@ -103,6 +113,40 @@ public class PlanInfoServiceImpl implements PlanInfoService {
             planModels = this.convertEntitiesToModels(planEntities);
         }
         return planModels;
+    }
+    
+    @Override
+    public PlanModel getPlanModelByTitle(List<PlanModel> planModels, String title) {
+        for(PlanModel planModel : planModels)
+        {
+            if(planModel.getTitle() == title)   return planModel;
+        }
+
+        return null;
+    }
+
+    @Override
+    public PlanModel getPlanModelByTitleAndDate(LocalDate date, String title)
+    {
+        List<PlanModel> planModels = this.getPlanModelsByDate(date);
+        PlanModel planModel = this.getPlanModelByTitle(planModels, title);
+        return planModel;
+    }
+
+    @Override
+    public PlanModel getPlanModelFromPlanModelString(String planModelString)
+    {
+        String date = planModelString.substring(0,10);
+        String timeIn = planModelString.substring(10, 15);
+        String timeOut = planModelString.substring(15, 20);
+        String remainder = planModelString.substring(21);
+        String locationId = remainder.substring(0, remainder.indexOf(" "));
+        String title = remainder.substring(remainder.indexOf(" ") + 1);
+
+        LocalDate localDate = LocalDate.parse(date);
+        LocalTime localTimeIn = LocalTime.parse(timeIn);
+        LocalTime localTimeOut = LocalTime.parse(timeOut);
+        return new PlanModel(title, Integer.parseInt(locationId), localDate, localTimeIn, localTimeOut);
     }
 
     // AccountPlanModel
@@ -273,6 +317,8 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         List<List<DayModel>> listWeeks = this.handleCalendar(daysInMonth, fixDayBot, fixDayTop, month, year);
         return new TableModel(month, monthString, year, locationModels, listWeeks);
     }
+
+
 
 }
 
