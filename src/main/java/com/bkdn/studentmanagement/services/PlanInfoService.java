@@ -28,6 +28,14 @@ public interface PlanInfoService {
     // Plan
     public void addNewPlan(PlanModel planModel);
 
+    public void deletePlanModel(PlanModel planModel);
+
+    public void deletePlanModelById(Integer plan_id);
+
+    public void UpdatePlanModelById(String title, Integer location_id, String date, String begin_time, String end_time, Integer id);
+
+    public PlanModel findPlanModelByTitle(String title);
+
     public List<PlanModel> convertEntitiesToModels(List<PlanEntity> planEntities);
 
     public List<PlanModel> getPlanModelsByDate(LocalDate Date);
@@ -40,6 +48,10 @@ public interface PlanInfoService {
 
     // AccountPlan
     public void addNewAccountPlan(AccountPlanModel accountPlanModel);
+    
+    public void deleteAccountPlanModelsByPlanId(Integer planId);
+
+
 
     // DayModel
     public DayModel getDayModel(LocalDate localDate);

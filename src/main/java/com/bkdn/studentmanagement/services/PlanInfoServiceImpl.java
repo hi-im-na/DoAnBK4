@@ -92,6 +92,32 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     @Override
+    public void deletePlanModel(PlanModel planModel) {
+        PlanEntity planEntity = new PlanEntity();
+        BeanUtils.copyProperties(planModel, planEntity);
+        planRepository.delete(planEntity);
+    }
+
+    @Override
+    public void deletePlanModelById(Integer plan_id) {
+        planRepository.deleteById(plan_id);
+    }
+
+    @Override
+    public void UpdatePlanModelById(String title, Integer location_id, String date, String begin_time, String end_time,
+            Integer id) {
+        planRepository.UpdatePlan(title, location_id, date, begin_time, end_time, id);
+    }
+
+    @Override
+    public PlanModel findPlanModelByTitle(String title) {
+        PlanEntity planEntity = planRepository.findPlanEntityByTitle(title);
+        PlanModel planModel = new PlanModel();
+        BeanUtils.copyProperties(planEntity, planModel);
+        return planModel;
+    }
+
+    @Override
     public List<PlanModel> convertEntitiesToModels(List<PlanEntity> planEntities) {
         if (planEntities == null)
             return null;
@@ -114,29 +140,27 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         }
         return planModels;
     }
-    
+
     @Override
     public PlanModel getPlanModelByTitle(List<PlanModel> planModels, String title) {
-        for(PlanModel planModel : planModels)
-        {
-            if(planModel.getTitle() == title)   return planModel;
+        for (PlanModel planModel : planModels) {
+            if (planModel.getTitle() == title)
+                return planModel;
         }
 
         return null;
     }
 
     @Override
-    public PlanModel getPlanModelByTitleAndDate(LocalDate date, String title)
-    {
+    public PlanModel getPlanModelByTitleAndDate(LocalDate date, String title) {
         List<PlanModel> planModels = this.getPlanModelsByDate(date);
         PlanModel planModel = this.getPlanModelByTitle(planModels, title);
         return planModel;
     }
 
     @Override
-    public PlanModel getPlanModelFromPlanModelString(String planModelString)
-    {
-        String date = planModelString.substring(0,10);
+    public PlanModel getPlanModelFromPlanModelString(String planModelString) {
+        String date = planModelString.substring(0, 10);
         String timeIn = planModelString.substring(10, 15);
         String timeOut = planModelString.substring(15, 20);
         String remainder = planModelString.substring(21);
@@ -160,6 +184,12 @@ public class PlanInfoServiceImpl implements PlanInfoService {
 
     }
 
+    @Override
+    public void deleteAccountPlanModelsByPlanId(Integer planId) {
+        List<AccountPlanEntity> accountPlanEntities = accountPlanRepository.findAllByPlanId(planId);
+        accountPlanRepository.deleteAll(accountPlanEntities);
+    }
+
     // DayModel
     @Override
     public DayModel getDayModel(LocalDate localDate) {
@@ -171,6 +201,11 @@ public class PlanInfoServiceImpl implements PlanInfoService {
     }
 
     // TableModel
+    /**
+     *Dùng để tính số ngày trong tháng được chỉ định 
+     * @param month
+     * @param year
+     */
     @Override
     public Integer getDaysInMonth(Integer month, Integer year) {
         switch (month) {
@@ -211,6 +246,11 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         }
     }
 
+    /**
+     *Dùng để lấy thứ của ngày 1 
+     * @param month
+     * @param year
+     */
     @Override
     public Integer getDOWByDay1(Integer month, Integer year) {
         LocalDate localDate = LocalDate.of(year, month, 1);
@@ -218,6 +258,10 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         return dayOfWeek.getValue() + 1;
     }
 
+    /**
+     *Dùng để tạo số ô dư trên
+     * @param DOWByDay1
+     */
     @Override
     public Integer getFixDayTop(Integer DOWByDay1) {
         switch (DOWByDay1) {
@@ -238,11 +282,20 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         }
     }
 
+    /**
+     *Dùng để tạo số ô dư dưới 
+     * @param fixDayTop
+     * @param daysInMonth
+     */
     @Override
     public Integer getFixDayBot(Integer fixDayTop, Integer daysInMonth) {
         return ((fixDayTop + daysInMonth) % 7 == 0) ? 0 : 7 - (fixDayTop + daysInMonth) % 7;
     }
 
+    /**
+     *Dùng để chuyển tháng số sang tháng chữ 
+     * @param month
+     */
     @Override
     public String monthToString(Integer month) {
         switch (month) {
@@ -273,6 +326,14 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         }
     }
 
+    /**
+     *Dùng để vẻ bảng với các thông số đầu vào là các ô dư trên, dư dưới, và số ngày trong tháng đó
+     * @param daysInMonth
+     * @param fixDayBot
+     * @param fixDayTop
+     * @param month
+     * @param year
+     */
     @Override
     public List<List<DayModel>> handleCalendar(Integer daysInMonth, Integer fixDayBot, Integer fixDayTop, Integer month,
             Integer year) {
@@ -306,6 +367,11 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         return listWeeks;
     }
 
+    /**
+     *Lấy tableModel bằng năm và tháng
+     * @param month
+     * @param year
+     */
     @Override
     public TableModel getTableModelByMonthAndYear(Integer month, Integer year) {
         Integer daysInMonth = this.getDaysInMonth(month, year);
@@ -318,67 +384,6 @@ public class PlanInfoServiceImpl implements PlanInfoService {
         return new TableModel(month, monthString, year, locationModels, listWeeks);
     }
 
-
+    
 
 }
-
-// @Override
-// public String monthToString(Integer month) {
-// switch (month) {
-// case 1:
-// return "January";
-// case 2:
-// return "February";
-// case 3:
-// return "March";
-// case 4:
-// return "April";
-// case 5:
-// return "May";
-// case 6:
-// return "June";
-// case 7:
-// return "July";
-// case 8:
-// return "August";
-// case 9:
-// return "September";
-// case 10:
-// return "October";
-// case 11:
-// return "November";
-// default:
-// return "December";
-// }
-// }
-
-// } public String monthToString(Integer month) {
-// switch (month) {
-// case 1:
-// return "January";
-// case 2:
-// return "February";
-// case 3:
-// return "March";
-// case 4:
-// return "April";
-// case 5:
-// return "May";
-// case 6:
-// return "June";
-// case 7:
-// return "July";
-// case 8:
-// return "August";
-// case 9:
-// return "September";
-// case 10:
-// return "October";
-// case 11:
-// return "November";
-// default:
-// return "December";
-// }
-// }
-
-// }

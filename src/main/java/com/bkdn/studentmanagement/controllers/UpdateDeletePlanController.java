@@ -25,8 +25,19 @@ public class UpdateDeletePlanController {
     }
 
     @PostMapping("/updateplan")
-    public String updatePlanPost(Model m, @RequestParam(value = "update_title") String title) {
-        System.out.println(title);
+    public String updatePlanPost(Model m, @RequestParam(value = "update_title") String title,
+            @RequestParam(value = "location") String locationId, @RequestParam(value = "update_date") String date,
+            @RequestParam(value = "update_beginTime") String beginTime,
+            @RequestParam(value = "update_endTime") String endTime,
+            @RequestParam(value = "update_delete") String update_date) {
+
+        PlanModel planModel = planInfoService.findPlanModelByTitle(title);
+        if(update_date.equals("delete")){
+            planInfoService.deleteAccountPlanModelsByPlanId(planModel.getId());
+            planInfoService.deletePlanModelById(planModel.getId());
+        }else {
+            planInfoService.UpdatePlanModelById(title, Integer.parseInt(locationId), date, beginTime, endTime, planModel.getId());
+        }
         return "redirect:/calendar";
     }
 

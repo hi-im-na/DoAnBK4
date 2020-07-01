@@ -13,29 +13,31 @@
         <div class="container-fluid">
             <form th:action="@{/updateplan}" method="POST">
                 <div class="form-group">
-                    Title <input type="text" name="update_title" th:value="${planModel.getTitle()}" required>
+                    Title <input type="text" class="form-control" name="update_title" th:value="${planModel.getTitle()}"
+                        required>
                 </div>
                 <div class="form-group">
-                    Time in <input type="time" name="update_beginTime" th:value="${planModel.getBeginTime()}">
+                    Time in <input type="time" class="form-control" name="update_beginTime"
+                        th:value="${planModel.getBeginTime()}">
                 </div>
                 <div class="form-group">
-                    Time out <input type="time" name="update_endTime" th:value="${planModel.getEndTime()}">
+                    Time out <input type="time" class="form-control" name="update_endTime"
+                        th:value="${planModel.getEndTime()}">
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="text" name="update_date"
                         th:value="${planModel.getDate().toString()}" hidden>
                 </div>
                 <div class="form-group">
-                    <select name="location">
+                    <select name="location" class="form-control">
                         <option th:each="locationModel : ${locationModels}" th:text="${locationModel.getLocationName()}"
                             th:value="${locationModel.getId()}">
                         </option>
                     </select>
                 </div>
-                <button class="btn btn-primary" type="submit">Update</button>
+                <button name = "update_delete" value = "update" class="btn btn-primary" type="submit">Update</button>
+                <button name = "update_delete" value = "delete" class="btn btn-danger" type="submit">Delete</button>
             </form>
-            <form action="">
-            <button class="btn btn-danger">Delete</button>
         </div>
     </div>
 </body>
